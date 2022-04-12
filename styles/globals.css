@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 html,
 body {
@@ -17,4 +17,13 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+
+.task_name--completed {
+  color: green;
+}
+
+.task_name--uncompleted {
+  color: red
 }
