@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { IWorkout, IWorkoutsList, IWorkoutsType } from '../Interfaces/IWorkout';
+import { Controller, useForm } from 'react-hook-form';
 
 // fetch('/api/add', {
 //   method: 'POST',
@@ -52,23 +53,26 @@ class DumpApi implements IApi {
 const api = new DumpApi();
 
 const Home: NextPage = () => {
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
-  const [tasksTypeToDisplay, setTasksTypeToDisplay] = useState<
-    IWorkoutsType | boolean
-  >(false);
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    addTask(
+      data.title,
+      data['date-input'].toISOString().slice(0, 10),
+      data.description,
+      data.duration,
+      data.type
+    );
+    console.log(data);
 
-  const [enteredTitleNewWorkout, setEnteredTitleNewWorkout] =
-    useState<string>('');
-  const [enteredDurationNewWorkout, setEnteredDurationNewWorkout] = useState<
-    string | ''
-  >('');
-  const [enteredDataNewWorkout, setEnteredDataNewWorkout] = useState<Date>(
-    new Date()
-  );
-  const [enteredTypeNewWorkout, setEnteredTypeNewWorkout] =
-    useState<IWorkoutsType>('General');
-  const [enteredDescriptionNewWorkout, setEnteredDescriptionNewWorkout] =
-    useState<string>('');
+    console.log(data['date-input'].toISOString());
+  };
+
+  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
   const [enteredTitleEditedWorkout, setEnteredTitleEditedWorkout] = useState<
     string | null
   >(null);
@@ -87,39 +91,6 @@ const Home: NextPage = () => {
     'Running',
   ];
 
-  const titleChangeNewWorkoutHandler = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setEnteredTitleNewWorkout(event.target.value);
-  };
-
-  const durationChangeNewWorkoutHandler = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setEnteredDurationNewWorkout(event.target.value);
-  };
-
-  const dataChangeNewWorkoutHandler = (date: Date) =>
-    setEnteredDataNewWorkout(date);
-
-  const typeChangeNewWorkoutHandler = (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
-    setEnteredTypeNewWorkout(event.target.value as IWorkoutsType);
-  };
-
-  const descriptionChangeNewWorkoutHandler = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setEnteredDescriptionNewWorkout(event.target.value);
-  };
-
-  const titleChangeEditedWorkoutHandler = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setEnteredTitleEditedWorkout(event.target.value);
-  };
-
   const clickHandler = (e) => {
     console.log(
       'Hovering over ' +
@@ -131,26 +102,6 @@ const Home: NextPage = () => {
       type: e.target.getAttribute('data-type'),
       id: +e.target.getAttribute('data-id'),
     });
-  };
-
-  const submitNewWorkout = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    addTask(
-      enteredTitleNewWorkout,
-      enteredDataNewWorkout.toISOString(),
-      enteredDescriptionNewWorkout,
-      +enteredDurationNewWorkout,
-      enteredTypeNewWorkout
-    );
-    console.log(
-      enteredTitleNewWorkout,
-      enteredDataNewWorkout.toISOString(),
-      enteredDescriptionNewWorkout,
-      +enteredDurationNewWorkout,
-      enteredTypeNewWorkout
-    );
-
-    setEnteredTitleNewWorkout('');
   };
 
   const addTask = (
@@ -211,103 +162,42 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <h1>FitoFit</h1>
 
-      <form id="formAddTask" onSubmit={submitNewWorkout}>
-        <div className={styles.control}>
-          <label htmlFor="NewWorkoutTitle" className={styles.label}>
-            title
-          </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input
+          type="text"
+          placeholder="title"
+          {...register('title', { required: true, max: 20, min: 3 })}
+        />
+        <input
+          type="number"
+          placeholder="duration"
+          {...register('duration', { required: true, max: 1440, min: 0 })}
+        />
+        <Controller
+          control={control}
+          name="date-input"
+          render={({ field }) => (
+            <DatePicker
+              placeholderText="Select date"
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+            />
+          )}
+        />
+        <select {...register('category')}>
+          <option value="General ">General </option>
+          <option value=" Cardio "> Cardio </option>
+          <option value=" Running "> Running </option>
+          <option value=" Cycling"> Cycling</option>
+        </select>
+        <input
+          type="text"
+          placeholder="description"
+          {...register('description', { max: 50, min: 3 })}
+        />
 
-          <input
-            id="NewWorkoutTitle"
-            type="text"
-            required
-            value={enteredTitleNewWorkout}
-            onChange={titleChangeNewWorkoutHandler}
-            className={`${styles.input} form-control`}
-          />
-        </div>
-
-        <div className={styles.control}>
-          <label htmlFor="NewWorkoutDuration" className={styles.label}>
-            duration
-          </label>
-
-          <input
-            id="NewWorkoutDuration"
-            type="number"
-            required
-            value={enteredDurationNewWorkout}
-            onChange={durationChangeNewWorkoutHandler}
-            className={`${styles.input} form-control`}
-          />
-        </div>
-
-        <div className={styles.control}>
-          {/* <label htmlFor="NewWorkoutData" className={styles.label}>
-            data
-          </label>
-
-          <input
-            id="NewWorkoutData"
-            type="text"
-            required
-            value={enteredDataNewWorkout}
-            onChange={dataChangeNewWorkoutHandler}
-            className={`${styles.input} form-control`}
-          /> */}
-
-          <label htmlFor="NewWorkoutData" className={styles.label}>
-            data
-          </label>
-          <DatePicker
-            id="NewWorkoutData"
-            selected={enteredDataNewWorkout}
-            onChange={dataChangeNewWorkoutHandler}
-          />
-        </div>
-
-        <div className={styles.control}>
-          <label htmlFor="NewWorkoutType">Choose type:</label>
-          <select
-            id="NewWorkoutType"
-            name=""
-            value={enteredDescriptionNewWorkout}
-            onChange={typeChangeNewWorkoutHandler}
-          >
-            {workoutsTypes.map((workoutType) => {
-              return (
-                <option key={workoutType} value={workoutType}>
-                  {workoutType}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <div className={styles.control}>
-          <label htmlFor="NewWorkoutDescription" className={styles.label}>
-            description
-          </label>
-
-          <input
-            id="NewWorkoutDescription"
-            type="text"
-            required
-            value={enteredDescriptionNewWorkout}
-            onChange={descriptionChangeNewWorkoutHandler}
-            className={`${styles.input} form-control`}
-          />
-        </div>
-
-        <button
-          id="buttonSubmitNewWorkout"
-          type="submit"
-          className={`button button_task button_task--add`}
-        >
-          SAVE
-        </button>
+        <input type="submit" />
       </form>
-
       <ul id="tasksList">
         {tasksList &&
           tasksList.map((workout, index) => {
