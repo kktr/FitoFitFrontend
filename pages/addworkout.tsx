@@ -22,14 +22,14 @@ export default function AddWorkout() {
   const onSubmit = (data, e) => {
     addTask(
       data.title,
-      data['date-input'].toISOString().slice(0, 10),
+      data['date-input']
+        ? data['date-input'].toISOString().slice(0, 10)
+        : new Date().toISOString().slice(0, 10),
       data.description,
       data.duration,
       data.type
     );
     console.log(data);
-
-    console.log(data['date-input'].toISOString());
     reset();
   };
 
@@ -145,7 +145,11 @@ export default function AddWorkout() {
                   <input
                     type="text"
                     placeholder="title"
-                    className="border py-2 px-3 text-grey-darkest md:mr-2"
+                    className="py-2 px-3 text-grey-darkest md:mr-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+        focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                     {...register('title', { required: true, max: 20, min: 3 })}
                   />
                 </div>
@@ -154,7 +158,11 @@ export default function AddWorkout() {
                   <input
                     type="number"
                     placeholder="duration"
-                    className="border py-2 px-3 text-grey-darkest md:ml-2"
+                    className="py-2 px-3 text-grey-darkest md:ml-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                     {...register('duration', {
                       required: true,
                       max: 1440,
