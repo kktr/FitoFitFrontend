@@ -1,7 +1,7 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
-
+@tailwind utilities;
+/* 
 html,
 body {
   padding: 0;
@@ -17,7 +17,7 @@ a {
 
 * {
   box-sizing: border-box;
-}
+} */
 
 
 .task_name--completed {
