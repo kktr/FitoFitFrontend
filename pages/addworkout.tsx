@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { addDays } from 'date-fns';
 
-import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
+import { IWorkout, IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
 import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { Workout } from 'dtos/workout';
 
 export default function AddWorkout() {
   const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
-
   const [hightestId, setHightestId] = useState<number>(0);
+
   const {
     control,
     register,
     handleSubmit,
     reset,
+    getValues,
+    formState,
     formState: { errors },
-  } = useForm();
+  } = useForm<Workout>({ resolver: classValidatorResolver(Workout) });
+
+  console.log(formState.errors);
+  console.log(getValues());
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList'));
@@ -42,7 +50,7 @@ export default function AddWorkout() {
         : new Date().toISOString().slice(0, 10),
       data.description,
       +data.duration,
-      data.type
+      data.type ? data.type : 'General'
     );
 
     console.log(data);
@@ -116,8 +124,9 @@ export default function AddWorkout() {
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
       invalid:border-pink-500 invalid:text-pink-600
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                    {...register('title', { required: true, max: 20, min: 3 })}
+                    {...register('title')}
                   />
+                  {errors.title && <span>{errors.title.message}</span>}
                 </div>
 
                 <div className="flex flex-col mb-4">
@@ -129,38 +138,41 @@ export default function AddWorkout() {
       disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
       invalid:border-pink-500 invalid:text-pink-600
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                    {...register('duration', {
-                      required: true,
-                      max: 1440,
-                      min: 0,
+                    {...register(`duration`, {
+                      setValueAs: (v) => parseInt(v),
                     })}
                   />
+                  {errors.duration && <span>{errors.duration.message}</span>}
                 </div>
                 <div className="flex flex-col mb-4 md:w-full">
                   <Controller
                     control={control}
-                    name="date-input"
+                    name="data"
                     render={({ field }) => (
                       <DatePicker
                         className="border py-2 px-3 text-grey-darkest"
+                        dateFormat="yyyy-MM-dd"
+                        maxDate={new Date()}
                         placeholderText="Select date"
                         onChange={(date) => field.onChange(date)}
                         selected={field.value}
+                        todayButton="Set Today"
                       />
                     )}
                   />
+                  {errors.data && <span>{errors.data.message}</span>}
                 </div>
 
                 <div>
                   <legend className="text-base font-medium text-gray-900">
-                    Workout category
+                    Workout type
                   </legend>
                 </div>
                 <div className="mt-4 space-y-4">
                   <div className="flex items-center">
                     <input
                       id="general"
-                      {...register('category')}
+                      {...register('type')}
                       type="radio"
                       value="General"
                       className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
@@ -174,7 +186,7 @@ export default function AddWorkout() {
                   </div>
                   <div className="flex items-center">
                     <input
-                      {...register('category')}
+                      {...register('type')}
                       id="cardio"
                       type="radio"
                       value="Cardio"
@@ -190,7 +202,7 @@ export default function AddWorkout() {
 
                   <div className="flex items-center">
                     <input
-                      {...register('category')}
+                      {...register('type')}
                       id="running"
                       type="radio"
                       value="Running"
@@ -206,12 +218,13 @@ export default function AddWorkout() {
 
                   <div className="flex items-center">
                     <input
-                      {...register('category')}
+                      {...register('type')}
                       id="cycling"
                       type="radio"
                       value="Cycling"
                       className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                     />
+                    {errors.type && <span>{errors.type.message}</span>}
                     <label
                       htmlFor="cycling"
                       className="ml-3 block text-sm font-medium text-gray-700"
@@ -230,11 +243,14 @@ export default function AddWorkout() {
                   </label>
                   <div className="mt-1">
                     <textarea
-                      {...register('description', { min: 3 })}
+                      {...register('description')}
                       id="description"
                       rows={3}
                       className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="you@example.com"'
                     />
+                    {errors.description && (
+                      <span>{errors.description.message}</span>
+                    )}
                   </div>
                 </div>
               </div>

@@ -11,7 +11,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
     "@nextcss/reset": "^0.2.2-beta",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "cypress": "^9.5.3",
     "moment": "^2.29.2",
     "next": "12.1.4",
