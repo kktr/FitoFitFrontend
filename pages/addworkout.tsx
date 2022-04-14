@@ -43,7 +43,7 @@ export default function AddWorkout() {
 
   const onSubmit = (data, e) => {
     console.log('submit');
-    addTask(
+    addWorkout(
       data.title,
       data['date-input']
         ? data['date-input'].toISOString().slice(0, 10)
@@ -57,38 +57,26 @@ export default function AddWorkout() {
     reset();
   };
 
-  const addTask = (
+  const addWorkout = (
     newWorkoutTitle: string,
     newWorkoutData: string,
     newWorkoutDescription: string,
     newWorkoutDuration: number,
     newWorkoutType: IWorkoutsType = 'General'
   ) => {
-    let newId = hightestId + 1;
-
+    const newId = hightestId + 1;
+    const newWorkout = {
+      id: newId,
+      title: newWorkoutTitle,
+      duration: newWorkoutDuration,
+      type: newWorkoutType,
+      data: newWorkoutData,
+      description: newWorkoutDescription,
+    };
     if (tasksList !== null && tasksList.length > 0) {
-      setTasksList([
-        ...tasksList,
-        {
-          id: newId,
-          title: newWorkoutTitle,
-          duration: newWorkoutDuration,
-          type: newWorkoutType,
-          data: newWorkoutData,
-          description: newWorkoutDescription,
-        },
-      ]);
+      setTasksList([...tasksList, newWorkout]);
     } else {
-      setTasksList([
-        {
-          id: newId,
-          title: newWorkoutTitle,
-          duration: newWorkoutDuration,
-          type: newWorkoutType,
-          data: newWorkoutData,
-          description: newWorkoutDescription,
-        },
-      ]);
+      setTasksList([newWorkout]);
     }
     setHightestId((previousHightestId) => previousHightestId + 1);
   };
