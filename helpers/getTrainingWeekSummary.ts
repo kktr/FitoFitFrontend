@@ -22,10 +22,16 @@ export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
     'you are on a way to die! Slow down, leave some power for next week!',
     "if You don't take drugs, maybe it's too much",
   ];
+  const workoutsSortedByDates = sortWorkoutsByDate(tasksList);
+  const workoutsNumberLastWeek = workoutsSortedByDates.weekSummary;
+  const workoutsNumbersPreviousWeek = workoutsSortedByDates.previousWeekSummary;
 
-  const weekSummary = sortWorkoutsByDate(tasksList).weekSummary;
-  const workout = weekSummary > 1 ? ' workouts' : ' workout';
-  return weekSummary <= 8
-    ? `In the last 7 days You made ${weekSummary} ${workout}! You train like ${trainingLevels[weekSummary]} ${trainingMessage[weekSummary]}`
-    : `In the last 7 days You made ${weekSummary} ${workout}! You train like ${trainingLevels[7]} ${trainingMessage[7]}`;
+  const workout = workoutsNumberLastWeek > 1 ? ' workouts' : ' workout';
+  const baseSentence = `In the last 7 days You made ${workoutsNumberLastWeek} ${workout}! You train like `;
+  const endSentence = `You made ${
+    workoutsNumberLastWeek > workoutsNumbersPreviousWeek ? ' more' : 'less'
+  }  workouts than last week! `;
+  return workoutsNumberLastWeek < 8
+    ? `${baseSentence} ${trainingLevels[workoutsNumberLastWeek]} ${trainingMessage[workoutsNumberLastWeek]} ${endSentence}`
+    : `${baseSentence} ${trainingLevels[7]} ${trainingMessage[7]} ${endSentence}`;
 };
