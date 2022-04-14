@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { addDays } from 'date-fns';
-
-import { IWorkout, IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
+import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
 import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
@@ -32,9 +30,9 @@ export default function AddWorkout() {
   }, []);
 
   useEffect(() => {
-    if (tasksList && tasksList[tasksList?.length - 1]?.id !== undefined) {
-      setHightestId(tasksList[tasksList?.length - 1].id);
-    }
+    tasksList && tasksList[tasksList?.length - 1]?.id !== undefined
+      ? setHightestId(tasksList[tasksList?.length - 1].id)
+      : setHightestId(0);
   }, [tasksList]);
 
   useEffect(() => {
@@ -53,7 +51,6 @@ export default function AddWorkout() {
       data.type ? data.type : 'General'
     );
 
-    console.log(data);
     reset();
   };
 
@@ -73,11 +70,11 @@ export default function AddWorkout() {
       data: newWorkoutData,
       description: newWorkoutDescription,
     };
-    if (tasksList !== null && tasksList.length > 0) {
-      setTasksList([...tasksList, newWorkout]);
-    } else {
-      setTasksList([newWorkout]);
-    }
+
+    tasksList !== null && tasksList.length > 0
+      ? setTasksList([...tasksList, newWorkout])
+      : setTasksList([newWorkout]);
+
     setHightestId((previousHightestId) => previousHightestId + 1);
   };
 
