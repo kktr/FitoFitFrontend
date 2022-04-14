@@ -1,12 +1,13 @@
 import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
 import moment from 'moment';
-import { IWorkoutsLastWeekSummary } from '../interfaces/IWorkoutsLastWeekSummary';
+import { ISortWorkoutsByDate } from '../interfaces/ISortWorkoutsByDate';
 
 export const sortWorkoutsByDate = (
   tasksList: IWorkoutsList
-): IWorkoutsLastWeekSummary => {
-  const workoutsLastWeekSummary: IWorkoutsLastWeekSummary = {
+): ISortWorkoutsByDate => {
+  const workoutsLastWeekSummary: ISortWorkoutsByDate = {
     weekSummary: 0,
+    previousWeekSummary: 0,
     today: 0,
     yesterday: 0,
     twoDaysAgo: 0,
@@ -22,6 +23,12 @@ export const sortWorkoutsByDate = (
   workoutsLastWeekSummary.weekSummary = tasksList.length;
 
   tasksList.forEach((workout: IWorkout) => {
+    if (today.diff(workout.data, 'days') <= 7) {
+      workoutsLastWeekSummary.weekSummary++;
+    }
+    if (today.diff(workout.data, 'days') <= 14) {
+      workoutsLastWeekSummary.previousWeekSummary++;
+    }
     if (today.diff(workout.data, 'days') === 0) {
       workoutsLastWeekSummary.today++;
     } else if (today.diff(workout.data, 'days') === 1) {

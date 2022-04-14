@@ -1,5 +1,6 @@
-export interface IWorkoutsLastWeekSummary {
+export interface ISortWorkoutsByDate {
   weekSummary: number;
+  previousWeekSummary: number;
   today: number;
   yesterday: number;
   twoDaysAgo: number;
