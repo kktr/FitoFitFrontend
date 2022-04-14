@@ -269,5 +269,3 @@ export default function AddWorkout() {
     </div>
   );
 }
-
-// export default AddWorkout;
