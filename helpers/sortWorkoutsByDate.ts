@@ -20,8 +20,6 @@ export const sortWorkoutsByDate = (
 
   const today = moment(moment().format('YYYY-MM-DD'));
 
-  workoutsLastWeekSummary.weekSummary = tasksList.length;
-
   tasksList.forEach((workout: IWorkout) => {
     if (today.diff(workout.data, 'days') <= 7) {
       workoutsLastWeekSummary.weekSummary++;

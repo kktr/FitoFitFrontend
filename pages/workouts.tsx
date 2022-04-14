@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  IWorkout,
-  IWorkoutsList,
-  mockWorkoutsList,
-} from '../interfaces/IWorkout';
+import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
 import Image from 'next/image';
 import {
   BarChart,
@@ -19,15 +15,10 @@ import { getWorkoutsChartData } from '../helpers/getWorkoutsChartData';
 import Link from 'next/link';
 
 export default function Workouts() {
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(
-    mockWorkoutsList
-  );
-  const [hightestId, setHightestId] = useState<number>(0);
+  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
   const [motivationSentence, setMotivationSentence] = useState<string>(
     'Training is the key to success'
   );
-
-  // const [items, setItems] = useState([]);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList'));
@@ -57,14 +48,15 @@ export default function Workouts() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const editTaskInTasksList = (
-    EditedWorkoutList: IWorkoutsList,
-    replacedTask: IWorkout
-  ) => {
-    return EditedWorkoutList.map((task) => {
-      return task.id === replacedTask.id ? replacedTask : task;
-    });
-  };
+  // ! TODO: implement EDITING someday
+  // const editTaskInTasksList = (
+  //   EditedWorkoutList: IWorkoutsList,
+  //   replacedTask: IWorkout
+  // ) => {
+  //   return EditedWorkoutList.map((task) => {
+  //     return task.id === replacedTask.id ? replacedTask : task;
+  //   });
+  // };
 
   const deleteTaskInTasksList = (
     EditedWorkoutList: IWorkoutsList,
@@ -78,7 +70,7 @@ export default function Workouts() {
   return (
     <div className="flex flex-col w-full items-center">
       <div className="mt-2 p-4 text-blue-600/75 text-center">
-        {getTrainingWeekSummary(tasksList)}
+        {tasksList && getTrainingWeekSummary(tasksList)}
       </div>
 
       <div className="mt-2 p-4 text-blue-600/75 text-center">
@@ -94,7 +86,7 @@ export default function Workouts() {
         <BarChart
           width={400}
           height={300}
-          data={getWorkoutsChartData(tasksList)}
+          data={tasksList && getWorkoutsChartData(tasksList)}
           margin={{
             top: 20,
             right: 25,
@@ -118,6 +110,7 @@ export default function Workouts() {
       <ul id="tasksList" className="flex flex-col items-center w-full px-4">
         {tasksList &&
           tasksList.map((workout, index) => {
+            // ! TODO IMPLEMENT SORTING SOMEDAY
             // if (
             //   workoutsTypeToDisplay === workoutsType.Completed &&
             //   workout.status === StatusType.Active
@@ -134,12 +127,6 @@ export default function Workouts() {
                 key={`workout workout--${workout.id}`}
               >
                 <div>
-                  {/* <div>
-                    {new Date(workout.data).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </div> */}
                   <div className="flex justify-between ">
                     <div className="flex">
                       <div className=" w-6 mr-2">
@@ -209,7 +196,7 @@ export default function Workouts() {
           Add workout
         </a>
       </Link>
-
+      {/* ! IMPLEMENT SORTING */}
       {/* <button
         id="buttonTypeDisplayAll"
         className={`button button_type-display button_type-display--all`}

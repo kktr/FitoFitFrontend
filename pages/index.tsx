@@ -1,60 +1,16 @@
-import { IApi, IGetWorkoutsListResponse } from '../interfaces/IApi';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import '@nextcss/reset';
-import styles from '../styles/Home.module.css';
-import useDimensions from 'react-cool-dimensions';
 import Link from 'next/link';
-
-// fetch('/api/add', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({ number_one: 1, number_two: 'two' }),
-// });
-
-const exampleResponse: IGetWorkoutsListResponse = {
-  workoutsList: [
-    {
-      id: 1,
-      title: 'Workout 1',
-      duration: 60,
-      type: 'Cycling',
-      data: '2020-05-01',
-    },
-    {
-      id: 2,
-      title: 'Workout 2',
-      duration: 60,
-      type: 'Running',
-      data: '2020-05-01',
-    },
-    {
-      id: 3,
-      title: 'Workout 3',
-      duration: 60,
-      type: 'Cycling',
-      data: '2020-05-01',
-    },
-  ],
-};
-
-class DumpApi implements IApi {
-  getTasksList(): Promise<IGetWorkoutsListResponse> {
-    return new Promise((resolve) =>
-      setTimeout(() => resolve(exampleResponse), 1000)
-    );
-  }
-}
-
-const api = new DumpApi();
 
 const Home: NextPage = () => {
   return (
-    <div className={'h-screen flex flex-col justify-between items-center'}>
+    <div
+      className={'h-screen flex flex-col justify-between items-center max-w-xs'}
+    >
       <div className="">
         <Image
+          alt="people training"
           src="/../public/illustration.png"
           objectFit="cover"
           width={1656}

@@ -1,32 +1,14 @@
-import { IApi, IGetWorkoutsListResponse } from '../interfaces/IApi';
-import type { NextPage } from 'next';
-import Image from 'next/image';
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import styles from '../styles/Home.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import {
-  IWorkout,
-  IWorkoutsList,
-  IWorkoutsType,
-  mockWorkoutsList,
-} from '../interfaces/IWorkout';
+import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
 import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
-import { UseLocalStorage } from '../hooks/UseLocalStorage';
 
 export default function AddWorkout() {
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(
-    mockWorkoutsList
-  );
-  const [localTaskList, setLocalTaskList] = useState<IWorkoutsList | null>(
-    mockWorkoutsList
-  );
-  const [name, setName] = UseLocalStorage<IWorkoutsList | null>(
-    'workoutsList',
-    tasksList
-  );
+  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
+
   const [hightestId, setHightestId] = useState<number>(0);
   const {
     control,
@@ -36,19 +18,16 @@ export default function AddWorkout() {
     formState: { errors },
   } = useForm();
 
-  const [items, setItems] = useState([]);
-
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList'));
-    if (items) {
-      setLocalTaskList(items);
-      console.log(items);
-    }
+    items && setTasksList(items);
   }, []);
 
-  // useEffect(() => {
-  //   setTasksList(localTaskList);
-  // }, [localTaskList]);
+  useEffect(() => {
+    if (tasksList && tasksList[tasksList?.length - 1]?.id !== undefined) {
+      setHightestId(tasksList[tasksList?.length - 1].id);
+    }
+  }, [tasksList]);
 
   useEffect(() => {
     localStorage.setItem('workoutsList', JSON.stringify(tasksList));
@@ -69,13 +48,6 @@ export default function AddWorkout() {
     console.log(data);
     reset();
   };
-
-  const workoutsTypes: IWorkoutsType[] = [
-    'General',
-    'Cardio',
-    'Cycling',
-    'Running',
-  ];
 
   const addTask = (
     newWorkoutTitle: string,
@@ -282,7 +254,7 @@ export default function AddWorkout() {
                 >
                   <a
                     className={
-                      'mb-20 inline-block px-7 py-3 bg-red-500 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out'
+                      'mb-20 inline-block px-7 py-3 bg-green-500 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out'
                     }
                   >
                     Workouts

@@ -10,6 +10,7 @@ export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
     'a National Champion',
     'a Sport Legend',
     'a Arnold Schwarzenegger',
+    'a Russian Athlete',
   ];
 
   const trainingMessage = [
@@ -31,7 +32,7 @@ export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
   const endSentence = `You made ${
     workoutsNumberLastWeek > workoutsNumbersPreviousWeek ? ' more' : 'less'
   }  workouts than last week! `;
-  return workoutsNumberLastWeek < 8
+  return workoutsNumberLastWeek < 7
     ? `${baseSentence} ${trainingLevels[workoutsNumberLastWeek]} ${trainingMessage[workoutsNumberLastWeek]} ${endSentence}`
     : `${baseSentence} ${trainingLevels[7]} ${trainingMessage[7]} ${endSentence}`;
 };
