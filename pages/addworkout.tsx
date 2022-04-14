@@ -21,17 +21,15 @@ export default function AddWorkout() {
     formState: { errors },
   } = useForm<Workout>({ resolver: classValidatorResolver(Workout) });
 
-  console.log(formState.errors);
-  console.log(getValues());
-
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList'));
     items && setTasksList(items);
   }, []);
 
   useEffect(() => {
-    tasksList && tasksList[tasksList?.length - 1]?.id !== undefined
-      ? setHightestId(tasksList[tasksList?.length - 1].id)
+    const lastWorkoutID = tasksList && tasksList[tasksList?.length - 1]?.id;
+    tasksList && lastWorkoutID !== null && lastWorkoutID !== undefined
+      ? setHightestId(lastWorkoutID)
       : setHightestId(0);
   }, [tasksList]);
 
@@ -40,7 +38,6 @@ export default function AddWorkout() {
   }, [tasksList]);
 
   const onSubmit = (data, e) => {
-    console.log('submit');
     addWorkout(
       data.title,
       data['date-input']
