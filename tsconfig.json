@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"],
+      "@pages/*": ["pages/*"],
+      "@hooks/*": ["hooks/*"],
+      "@helpers/*": ["helpers/*"],
+      "@interfaces/*": ["interfaces/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -17,5 +26,10 @@
     "types": ["cypress", "node", "@types/react-datepicker"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "moduleNameMapper": {
+    "\\.(css|less|scss|sass)$": "<rootDir>/styles/__mocks__/styleMock.js",
+    "^@pages/(.*)$": "<rootDir>/pages/$1",
+    "^@components/(.*)$": "<rootDir>/components/$1"
+  }
 }
