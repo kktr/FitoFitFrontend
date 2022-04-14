@@ -1,16 +1,33 @@
 import { IApi, IGetWorkoutsListResponse } from '../interfaces/IApi';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import styles from '../styles/Home.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { IWorkout, IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
+import {
+  IWorkout,
+  IWorkoutsList,
+  IWorkoutsType,
+  mockWorkoutsList,
+} from '../interfaces/IWorkout';
 import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
+import { UseLocalStorage } from '../hooks/UseLocalStorage';
 
 export default function AddWorkout() {
+  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(
+    mockWorkoutsList
+  );
+  const [localTaskList, setLocalTaskList] = useState<IWorkoutsList | null>(
+    mockWorkoutsList
+  );
+  const [name, setName] = UseLocalStorage<IWorkoutsList | null>(
+    'workoutsList',
+    tasksList
+  );
+  const [hightestId, setHightestId] = useState<number>(0);
   const {
     control,
     register,
@@ -19,22 +36,39 @@ export default function AddWorkout() {
     formState: { errors },
   } = useForm();
 
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('workoutsList'));
+    if (items) {
+      setLocalTaskList(items);
+      console.log(items);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   setTasksList(localTaskList);
+  // }, [localTaskList]);
+
+  useEffect(() => {
+    localStorage.setItem('workoutsList', JSON.stringify(tasksList));
+  }, [tasksList]);
+
   const onSubmit = (data, e) => {
+    console.log('submit');
     addTask(
       data.title,
       data['date-input']
         ? data['date-input'].toISOString().slice(0, 10)
         : new Date().toISOString().slice(0, 10),
       data.description,
-      data.duration,
+      +data.duration,
       data.type
     );
+
     console.log(data);
     reset();
   };
-
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
-  const [hightestId, setHightestId] = useState<number>(0);
 
   const workoutsTypes: IWorkoutsType[] = [
     'General',
@@ -234,6 +268,13 @@ export default function AddWorkout() {
               </div>
 
               <div className="flex justify-around">
+                <input
+                  value="Add"
+                  type="submit"
+                  className={
+                    'mb-20 inline-block px-7 py-3 bg-blue-500 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                  }
+                />
                 <Link
                   href={{
                     pathname: '/workouts',
@@ -241,10 +282,10 @@ export default function AddWorkout() {
                 >
                   <a
                     className={
-                      'mb-20 inline-block px-7 py-3 bg-blue-500 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                      'mb-20 inline-block px-7 py-3 bg-red-500 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out'
                     }
                   >
-                    Add
+                    Workouts
                   </a>
                 </Link>
 

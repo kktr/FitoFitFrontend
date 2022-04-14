@@ -16,6 +16,7 @@ import {
 } from 'recharts';
 import { getTrainingWeekSummary } from '../helpers/getTrainingWeekSummary';
 import { getWorkoutsChartData } from '../helpers/getWorkoutsChartData';
+import Link from 'next/link';
 
 export default function Workouts() {
   const [tasksList, setTasksList] = useState<IWorkoutsList | null>(
@@ -25,6 +26,20 @@ export default function Workouts() {
   const [motivationSentence, setMotivationSentence] = useState<string>(
     'Training is the key to success'
   );
+
+  // const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('workoutsList'));
+    if (items) {
+      setTasksList(items);
+      console.log(items);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('workoutsList', JSON.stringify(tasksList));
+  }, [tasksList]);
 
   const getMotivationSentence = async () => {
     const BASE_URL = 'https://nodejs-quoteapp.herokuapp.com/quote';
@@ -180,6 +195,20 @@ export default function Workouts() {
             );
           })}
       </ul>
+
+      <Link
+        href={{
+          pathname: '/addworkout',
+        }}
+      >
+        <a
+          className={
+            'mb-20 inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+          }
+        >
+          Add workout
+        </a>
+      </Link>
 
       {/* <button
         id="buttonTypeDisplayAll"
