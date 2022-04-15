@@ -38,11 +38,10 @@ export default function AddWorkout() {
   }, [tasksList]);
 
   const onSubmit = (data, e) => {
+    console.log(data);
     addWorkout(
       data.title,
-      data['date-input']
-        ? data['date-input'].toISOString().slice(0, 10)
-        : new Date().toISOString().slice(0, 10),
+      data.data.toISOString().slice(0, 10),
       data.description,
       +data.duration,
       data.type ? data.type : 'General'
