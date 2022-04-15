@@ -21,12 +21,6 @@ export const sortWorkoutsByDate = (
   const today = moment(moment().format('YYYY-MM-DD'));
 
   tasksList.forEach((workout: IWorkout) => {
-    if (today.diff(workout.data, 'days') <= 7) {
-      workoutsLastWeekSummary.weekSummary++;
-    }
-    if (today.diff(workout.data, 'days') <= 14) {
-      workoutsLastWeekSummary.previousWeekSummary++;
-    }
     if (today.diff(workout.data, 'days') === 0) {
       workoutsLastWeekSummary.today++;
     } else if (today.diff(workout.data, 'days') === 1) {
@@ -43,6 +37,11 @@ export const sortWorkoutsByDate = (
       workoutsLastWeekSummary.sixDaysAgo++;
     } else if (today.diff(workout.data, 'days') === 7) {
       workoutsLastWeekSummary.sevenDaysAgo++;
+    }
+    if (today.diff(workout.data, 'days') <= 7) {
+      workoutsLastWeekSummary.weekSummary++;
+    } else if (today.diff(workout.data, 'days') <= 14) {
+      workoutsLastWeekSummary.previousWeekSummary++;
     }
   });
   return workoutsLastWeekSummary;

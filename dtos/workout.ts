@@ -45,6 +45,3 @@ export class Workout implements IWorkout {
   @IsOptional()
   description!: string;
 }
-function IWorkoutType(values: any, IWorkoutType: any) {
-  throw new Error('Function not implemented.');
-}
