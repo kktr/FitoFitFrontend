@@ -16,7 +16,7 @@ export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
   const trainingMessage = [
     'move Your FAT ASS!',
     'try more cardio, more running, more cycling!',
-    'if you not try harder, You will not succeed',
+    "if you don't train harder, You will not succeed",
     "you're doing great!",
     'nice work, keep pushing!',
     'your ass will be smaller!',
