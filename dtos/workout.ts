@@ -1,4 +1,4 @@
-import { IWorkout, IWorkoutsType, workoutsTypes } from '@interfaces/IWorkout';
+import { IWorkout, IWorkoutsType, workoutsTypes } from '../interfaces/IWorkout';
 
 import {
   IsInt,
@@ -30,7 +30,7 @@ export class Workout implements IWorkout {
   @IsDate({
     message: 'select the date of the workout',
   })
-  data!: string;
+  data!: Date;
 
   @IsString()
   @MinLength(5, {

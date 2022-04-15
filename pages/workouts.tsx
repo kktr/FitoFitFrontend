@@ -73,46 +73,48 @@ export default function Workouts() {
       <div className="mt-2 p-4 text-blue-600/75 text-center">
         {tasksList && getTrainingWeekSummary(tasksList)}
       </div>
-
       <div className="mt-2 p-4 text-blue-600/75 text-center">
         <h2>Motivational sentence for nerds</h2>
         <p className="transition-all">{motivationSentence}</p>
       </div>
-
       <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 text-blue-600">
         Your Activities
       </h2>
 
-      <div className="flex w-full mb-8 ">
-        <BarChart
-          width={400}
-          height={300}
-          data={tasksList && getWorkoutsChartData(tasksList)}
-          margin={{
-            top: 20,
-            right: 25,
-            left: 0,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis allowDecimals={false} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="all" stackId="a" fill="#8884d8" />
-          <Bar dataKey="general" stackId="a" fill="#7766cd" />
-          <Bar dataKey="cardio" stackId="a" fill="#229dca" />
-          <Bar dataKey="cycling" stackId="a" fill="#829dca" />
-          <Bar dataKey="running" stackId="a" fill="#82ca9d" />
-        </BarChart>
-      </div>
+      {tasksList && (
+        <>
+          <div className="flex w-full mb-8 ">
+            <BarChart
+              width={400}
+              height={300}
+              data={tasksList && getWorkoutsChartData(tasksList)}
+              margin={{
+                top: 20,
+                right: 25,
+                left: 0,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="all" stackId="a" fill="#8884d8" />
+              <Bar dataKey="general" stackId="a" fill="#7766cd" />
+              <Bar dataKey="cardio" stackId="a" fill="#229dca" />
+              <Bar dataKey="cycling" stackId="a" fill="#829dca" />
+              <Bar dataKey="running" stackId="a" fill="#82ca9d" />
+            </BarChart>
+          </div>
 
-      <TasksList
-        tasksList={tasksList}
-        setTasksList={setTasksList}
-        deleteTaskInTasksList={deleteTaskInTasksList}
-      />
+          <TasksList
+            tasksList={tasksList}
+            setTasksList={setTasksList}
+            deleteTaskInTasksList={deleteTaskInTasksList}
+          />
+        </>
+      )}
 
       <Link
         href={{
@@ -127,6 +129,7 @@ export default function Workouts() {
           Add workout
         </a>
       </Link>
+
       {/* ! IMPLEMENT SORTING */}
       {/* <button
         id="buttonTypeDisplayAll"
