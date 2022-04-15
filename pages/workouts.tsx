@@ -70,6 +70,7 @@ export default function Workouts() {
 
   return (
     <div className="flex flex-col w-full items-center">
+      <p>{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
       <div className="mt-2 p-4 text-blue-600/75 text-center">
         {tasksList && getTrainingWeekSummary(tasksList)}
       </div>
