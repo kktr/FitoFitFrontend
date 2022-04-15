@@ -10,7 +10,7 @@ export interface IWorkout {
   description?: string;
 }
 
-const workoutsTypes: IWorkoutsType[] = [
+export const workoutsTypes: IWorkoutsType[] = [
   'General',
   'Cardio',
   'Cycling',

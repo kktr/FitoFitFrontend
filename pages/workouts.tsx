@@ -22,7 +22,7 @@ export default function Workouts() {
   );
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('workoutsList'));
+    const items = JSON.parse(localStorage.getItem('workoutsList')!);
     if (items) {
       setTasksList(items);
       console.log(items);

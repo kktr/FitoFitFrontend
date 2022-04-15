@@ -1,10 +1,24 @@
 import Image from 'next/image';
+import { IWorkoutsList, IWorkout } from '../interfaces/IWorkout';
 
-export function TasksList({ tasksList, setTasksList, deleteTaskInTasksList }) {
+interface ITasksList {
+  tasksList: IWorkoutsList;
+  setTasksList: (workouts: IWorkoutsList) => void;
+  deleteTaskInTasksList: (
+    EditedWorkoutList: IWorkoutsList,
+    deletedTask: IWorkout
+  ) => IWorkoutsList;
+}
+
+export function TasksList({
+  tasksList,
+  setTasksList,
+  deleteTaskInTasksList,
+}: ITasksList): JSX.Element {
   return (
     <ul id="tasksList" className="flex flex-col items-center w-full px-4">
       {tasksList &&
-        tasksList.map((workout, index) => {
+        tasksList.map((workout: IWorkout, index: number) => {
           // ! TODO IMPLEMENT SORTING SOMEDAY
           // if (
           //   workoutsTypeToDisplay === workoutsType.Completed &&
@@ -41,12 +55,13 @@ export function TasksList({ tasksList, setTasksList, deleteTaskInTasksList }) {
                   <div
                     className={`workout_type workout_type--${workout.type} font-medium leading-tight text-xs mt-0 mb-2 text-gray-500`}
                   >
-                    {new Date(workout.data).toLocaleString('en-US', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {workout.data &&
+                      new Date(workout.data).toLocaleString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
                   </div>
                 </div>
 

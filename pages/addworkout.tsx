@@ -22,8 +22,11 @@ export default function AddWorkout() {
   } = useForm<Workout>({ resolver: classValidatorResolver(Workout) });
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('workoutsList'));
-    items && setTasksList(items);
+    if (localStorage.getItem('workoutsList') !== null) {
+      const items = JSON.parse(localStorage.getItem('workoutsList')!);
+
+      items && setTasksList(items);
+    }
   }, []);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function AddWorkout() {
     localStorage.setItem('workoutsList', JSON.stringify(tasksList));
   }, [tasksList]);
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (data: any, e: any) => {
     console.log(data);
     addWorkout(
       data.title,
