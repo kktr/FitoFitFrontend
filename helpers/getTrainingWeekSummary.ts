@@ -29,9 +29,13 @@ export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
 
   const workout = workoutsNumberLastWeek > 1 ? ' workouts' : ' workout';
   const baseSentence = `In the last 7 days You made ${workoutsNumberLastWeek} ${workout}! You train like `;
-  const endSentence = `You made ${
-    workoutsNumberLastWeek > workoutsNumbersPreviousWeek ? ' more' : 'less'
-  }  workouts than last week! `;
+  const endSentence = `You did ${
+    workoutsNumberLastWeek == workoutsNumbersPreviousWeek
+      ? 'the same amount of workouts like last week'
+      : workoutsNumberLastWeek > workoutsNumbersPreviousWeek
+      ? ' more workouts than last week'
+      : 'less workouts than last week'
+  }`;
   return workoutsNumberLastWeek < 7
     ? `${baseSentence} ${trainingLevels[workoutsNumberLastWeek]} ${trainingMessage[workoutsNumberLastWeek]} ${endSentence}`
     : `${baseSentence} ${trainingLevels[7]} ${trainingMessage[7]} ${endSentence}`;
