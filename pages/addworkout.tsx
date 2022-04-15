@@ -152,12 +152,13 @@ export default function AddWorkout() {
                   )}
                 </div>
 
-                <div>
-                  <legend className="text-base font-medium text-gray-900">
-                    Workout type
-                  </legend>
-                </div>
                 <div className="mt-4 space-y-4">
+                  <div>
+                    <legend className="text-base font-medium text-gray-900">
+                      Workout type
+                    </legend>
+                  </div>
+
                   <div className="flex items-center">
                     <input
                       id="general"
@@ -223,6 +224,112 @@ export default function AddWorkout() {
                   {errors.type && (
                     <span className="text-red-500">{errors.type.message}</span>
                   )}
+                </div>
+
+                <div className="mt-4 space-y-4">
+                  <legend className="text-base font-medium text-gray-900">
+                    Difficulty level
+                  </legend>
+
+                  <div className="rating">
+                    <input
+                      id="star1"
+                      {...(register('difficulty'),
+                      {
+                        setValueAs: (v) => parseInt(v),
+                      })}
+                      type="radio"
+                      value="1"
+                      className="mask mask-star-2 bg-orange-400"
+                    />
+
+                    <input
+                      {...(register('difficulty'),
+                      {
+                        setValueAs: (v) => parseInt(v),
+                      })}
+                      id="star2"
+                      type="radio"
+                      value="2"
+                      className="mask mask-star-2 bg-orange-400 checked"
+                    />
+
+                    <input
+                      {...(register('difficulty'),
+                      {
+                        setValueAs: (v) => parseInt(v),
+                      })}
+                      id="star3"
+                      type="radio"
+                      value="3"
+                      className="mask mask-star-2 bg-orange-400"
+                      checked
+                    />
+
+                    <input
+                      {...(register('difficulty'),
+                      {
+                        setValueAs: (v) => parseInt(v),
+                      })}
+                      id="star4"
+                      type="radio"
+                      value="4"
+                      className="mask mask-star-2 bg-orange-400"
+                    />
+
+                    <input
+                      {...(register('difficulty'),
+                      {
+                        setValueAs: (v) => parseInt(v),
+                      })}
+                      id="star"
+                      type="radio"
+                      value="5"
+                      className="mask mask-star-2 bg-orange-400"
+                    />
+                  </div>
+                  {errors.type && (
+                    <span className="text-red-500">{errors.type.message}</span>
+                  )}
+                </div>
+
+                <div className="mt-4 space-y-4">
+                  <legend className="text-base font-medium text-gray-900">
+                    How did you feel
+                  </legend>
+                  <div className="rating gap-1">
+                    <input
+                      {...register('feelings')}
+                      type="radio"
+                      value="1"
+                      className="mask mask-heart bg-red-400"
+                    />
+                    <input
+                      {...register('feelings')}
+                      type="radio"
+                      value="2"
+                      className="mask mask-heart bg-orange-400"
+                    />
+                    <input
+                      {...register('feelings')}
+                      type="radio"
+                      value="3"
+                      className="mask mask-heart bg-yellow-400"
+                      checked
+                    />
+                    <input
+                      {...register('feelings')}
+                      type="radio"
+                      value="4"
+                      className="mask mask-heart bg-lime-400"
+                    />
+                    <input
+                      {...register('feelings')}
+                      type="radio"
+                      value="5"
+                      className="mask mask-heart bg-green-400"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col mb-6 md:w-full">

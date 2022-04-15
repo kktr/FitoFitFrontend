@@ -39,6 +39,16 @@ export class Workout implements IWorkout {
   @IsIn(workoutsTypes)
   type!: IWorkoutsType;
 
+  @Max(5)
+  @Min(1)
+  @IsInt()
+  difficulty!: number;
+
+  @Max(5)
+  @Min(1)
+  @IsInt()
+  feelings!: number;
+
   @MaxLength(50)
   @MinLength(5)
   @IsString()
