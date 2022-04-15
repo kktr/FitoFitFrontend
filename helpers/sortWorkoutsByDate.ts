@@ -19,30 +19,44 @@ export const sortWorkoutsByDate = (
   };
 
   const today = moment(moment().format('YYYY-MM-DD'));
+  const daysDifference = (workout: IWorkout) => {
+    return today.diff(workout.data, 'days');
+  };
 
-  tasksList.forEach((workout: IWorkout) => {
-    if (today.diff(workout.data, 'days') === 0) {
-      workoutsLastWeekSummary.today++;
-    } else if (today.diff(workout.data, 'days') === 1) {
-      workoutsLastWeekSummary.yesterday++;
-    } else if (today.diff(workout.data, 'days') === 2) {
-      workoutsLastWeekSummary.twoDaysAgo++;
-    } else if (today.diff(workout.data, 'days') === 3) {
-      workoutsLastWeekSummary.threeDaysAgo++;
-    } else if (today.diff(workout.data, 'days') === 4) {
-      workoutsLastWeekSummary.fourDaysAgo++;
-    } else if (today.diff(workout.data, 'days') === 5) {
-      workoutsLastWeekSummary.fiveDaysAgo++;
-    } else if (today.diff(workout.data, 'days') === 6) {
-      workoutsLastWeekSummary.sixDaysAgo++;
-    } else if (today.diff(workout.data, 'days') === 7) {
-      workoutsLastWeekSummary.sevenDaysAgo++;
+  for (const workout of tasksList) {
+    if (daysDifference(workout) > 14) {
+      break;
     }
-    if (today.diff(workout.data, 'days') <= 7) {
-      workoutsLastWeekSummary.weekSummary++;
-    } else if (today.diff(workout.data, 'days') <= 14) {
-      workoutsLastWeekSummary.previousWeekSummary++;
+    daysDifference(workout) <= 7
+      ? workoutsLastWeekSummary.weekSummary++
+      : workoutsLastWeekSummary.previousWeekSummary++;
+
+    switch (daysDifference(workout)) {
+      case 0:
+        workoutsLastWeekSummary.today++;
+        break;
+      case 1:
+        workoutsLastWeekSummary.yesterday++;
+        break;
+      case 2:
+        workoutsLastWeekSummary.twoDaysAgo++;
+        break;
+      case 3:
+        workoutsLastWeekSummary.threeDaysAgo++;
+        break;
+      case 4:
+        workoutsLastWeekSummary.fourDaysAgo++;
+        break;
+      case 5:
+        workoutsLastWeekSummary.fiveDaysAgo++;
+        break;
+      case 6:
+        workoutsLastWeekSummary.sixDaysAgo++;
+        break;
+      case 7:
+        workoutsLastWeekSummary.sevenDaysAgo++;
+        break;
     }
-  });
+  }
   return workoutsLastWeekSummary;
 };
