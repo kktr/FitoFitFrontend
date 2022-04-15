@@ -108,7 +108,9 @@ export default function AddWorkout() {
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                     {...register('title')}
                   />
-                  {errors.title && <span>{errors.title.message}</span>}
+                  {errors.title && (
+                    <span className="text-red-500">{errors.title.message}</span>
+                  )}
                 </div>
 
                 <div className="flex flex-col mb-4">
@@ -124,7 +126,11 @@ export default function AddWorkout() {
                       setValueAs: (v) => parseInt(v),
                     })}
                   />
-                  {errors.duration && <span>{errors.duration.message}</span>}
+                  {errors.duration && (
+                    <span className="text-red-500">
+                      {errors.duration.message}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col mb-4 md:w-full">
                   <Controller
@@ -142,7 +148,9 @@ export default function AddWorkout() {
                       />
                     )}
                   />
-                  {errors.data && <span>{errors.data.message}</span>}
+                  {errors.data && (
+                    <span className="text-red-500">{errors.data.message}</span>
+                  )}
                 </div>
 
                 <div>
@@ -206,7 +214,6 @@ export default function AddWorkout() {
                       value="Cycling"
                       className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                     />
-                    {errors.type && <span>{errors.type.message}</span>}
                     <label
                       htmlFor="cycling"
                       className="ml-3 block text-sm font-medium text-gray-700"
@@ -214,6 +221,9 @@ export default function AddWorkout() {
                       Cycling
                     </label>
                   </div>
+                  {errors.type && (
+                    <span className="text-red-500">{errors.type.message}</span>
+                  )}
                 </div>
 
                 <div className="flex flex-col mb-6 md:w-full">
@@ -231,7 +241,9 @@ export default function AddWorkout() {
                       className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="you@example.com"'
                     />
                     {errors.description && (
-                      <span>{errors.description.message}</span>
+                      <span className="text-red-500">
+                        {errors.description.message}
+                      </span>
                     )}
                   </div>
                 </div>
