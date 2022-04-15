@@ -19,19 +19,20 @@ export const sortWorkoutsByDate = (
   };
 
   const today = moment(moment().format('YYYY-MM-DD'));
-  const daysDifference = (workout: IWorkout) => {
+  const getDaysDifference = (workout: IWorkout) => {
     return today.diff(workout.data, 'days');
   };
 
   for (const workout of tasksList) {
-    if (daysDifference(workout) > 14) {
+    const daysDifference = getDaysDifference(workout);
+    if (daysDifference > 14) {
       break;
     }
-    daysDifference(workout) <= 7
-      ? workoutsLastWeekSummary.weekSummary++
+    daysDifference <= 7
+      ? workoutsLastWeekSummary.weekSummary
       : workoutsLastWeekSummary.previousWeekSummary++;
 
-    switch (daysDifference(workout)) {
+    switch (daysDifference) {
       case 0:
         workoutsLastWeekSummary.today++;
         break;
