@@ -28,7 +28,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src"],
   "exclude": ["node_modules"],
   "moduleNameMapper": {
     "\\.(css|less|scss|sass)$": "<rootDir>/styles/__mocks__/styleMock.js",
