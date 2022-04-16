@@ -1,7 +1,6 @@
 import { TasksList } from './../components/TasksList';
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
-import Image from 'next/image';
 import {
   BarChart,
   Bar,
@@ -14,6 +13,9 @@ import {
 import { getTrainingWeekSummary } from '../helpers/getTrainingWeekSummary';
 import { getWorkoutsChartData } from '../helpers/getWorkoutsChartData';
 import Link from 'next/link';
+import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+
+export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 
 export default function Workouts() {
   const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
@@ -38,13 +40,14 @@ export default function Workouts() {
     const CROSS_DOMAIN = 'https://kktrcorsproxy.herokuapp.com';
     const response = await fetch(`${CROSS_DOMAIN}/${BASE_URL}`);
     const data = await response.json();
+
     setMotivationSentence(data.quote);
   };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       getMotivationSentence();
-    }, 10000);
+    }, 10_000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -58,15 +61,6 @@ export default function Workouts() {
   //     return task.id === replacedTask.id ? replacedTask : task;
   //   });
   // };
-
-  const deleteTaskInTasksList = (
-    EditedWorkoutList: IWorkoutsList,
-    deletedTask: IWorkout
-  ) => {
-    return EditedWorkoutList.filter(
-      (Task: { id: number }) => Task.id !== deletedTask.id
-    );
-  };
 
   return (
     <div className="flex flex-col w-full items-center">
@@ -108,12 +102,9 @@ export default function Workouts() {
               <Bar dataKey="running" stackId="a" fill="#82ca9d" />
             </BarChart>
           </div>
-
-          <TasksList
-            tasksList={tasksList}
-            setTasksList={setTasksList}
-            deleteTaskInTasksList={deleteTaskInTasksList}
-          />
+          <WorkoutsContext.Provider value={{ tasksList, setTasksList }}>
+            <TasksList tasksList={tasksList} setTasksList={setTasksList} />
+          </WorkoutsContext.Provider>
         </>
       )}
 

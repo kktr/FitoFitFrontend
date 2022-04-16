@@ -1,20 +1,28 @@
 import Image from 'next/image';
-import { IWorkoutsList, IWorkout } from '../interfaces/IWorkout';
+import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
+import { WorkoutsContext } from '@pages/workouts';
+import { useContext } from 'react';
+import { IWorkoutsContext } from '@interfaces/IWorkoutsContext';
 
-interface ITasksList {
-  tasksList: IWorkoutsList;
-  setTasksList: (workouts: IWorkoutsList) => void;
-  deleteTaskInTasksList: (
-    EditedWorkoutList: IWorkoutsList,
-    deletedTask: IWorkout
+export function TasksList(): JSX.Element {
+  const { tasksList, setTasksList } = useContext(
+    WorkoutsContext
+  ) as IWorkoutsContext;
+
+  type IDeleteTaskInTasksList = (
+    tasksList: IWorkoutsList,
+    taskToDelete: IWorkout
   ) => IWorkoutsList;
-}
 
-export function TasksList({
-  tasksList,
-  setTasksList,
-  deleteTaskInTasksList,
-}: ITasksList): JSX.Element {
+  const deleteTaskInTasksList: IDeleteTaskInTasksList = (
+    EditedWorkoutList,
+    deletedTask
+  ) => {
+    return EditedWorkoutList.filter(
+      (Task: { id: number }) => Task.id !== deletedTask.id
+    );
+  };
+
   return (
     <ul id="tasksList" className="flex flex-col items-center w-full px-4">
       {tasksList &&
