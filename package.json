@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "cypress run",
-    "test:watch": "cypress open",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "start": "next start",
     "lint": "next lint"
   },
