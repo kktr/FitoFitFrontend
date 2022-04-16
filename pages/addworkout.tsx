@@ -40,7 +40,7 @@ export default function AddWorkout() {
     localStorage.setItem('workoutsList', JSON.stringify(tasksList));
   }, [tasksList]);
 
-  const onSubmit = (data: any, e: any) => {
+  const onSubmit = (data: any) => {
     console.log(data);
     addWorkout(
       data.title,
@@ -125,7 +125,7 @@ export default function AddWorkout() {
       invalid:border-pink-500 invalid:text-pink-600
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                     {...register(`duration`, {
-                      setValueAs: (v) => parseInt(v),
+                      setValueAs: (v) => Number.parseInt(v),
                     })}
                   />
                   {errors.duration && (
