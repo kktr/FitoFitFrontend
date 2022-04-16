@@ -1,6 +1,6 @@
 import { TasksList } from './../components/TasksList';
 import React, { createContext, useEffect, useState } from 'react';
-import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
+import { IWorkoutsList } from '../interfaces/IWorkout';
 import {
   BarChart,
   Bar,
@@ -103,7 +103,7 @@ export default function Workouts() {
             </BarChart>
           </div>
           <WorkoutsContext.Provider value={{ tasksList, setTasksList }}>
-            <TasksList tasksList={tasksList} setTasksList={setTasksList} />
+            <TasksList />
           </WorkoutsContext.Provider>
         </>
       )}
