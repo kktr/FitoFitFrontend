@@ -1,4 +1,4 @@
-import { TasksList } from './../components/TasksList';
+import { WorkoutsList } from './../components/WorkoutsList';
 import React, { createContext, useEffect, useState } from 'react';
 import { IWorkoutsList } from '../interfaces/IWorkout';
 import { getTrainingWeekSummary } from '../helpers/getTrainingWeekSummary';
@@ -9,7 +9,7 @@ import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 
 export default function Workouts() {
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
+  const [workoutsList, setWorkoutsList] = useState<IWorkoutsList | null>(null);
   const [motivationSentence, setMotivationSentence] = useState<string>(
     'Training is the key to success'
   );
@@ -17,14 +17,14 @@ export default function Workouts() {
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList')!);
     if (items) {
-      setTasksList(items);
+      setWorkoutsList(items);
       console.log(items);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('workoutsList', JSON.stringify(tasksList));
-  }, [tasksList]);
+    localStorage.setItem('workoutsList', JSON.stringify(workoutsList));
+  }, [workoutsList]);
 
   const getMotivationSentence = async () => {
     const BASE_URL = 'https://nodejs-quoteapp.herokuapp.com/quote';
@@ -44,7 +44,7 @@ export default function Workouts() {
   }, []);
 
   // ! TODO: implement EDITING someday
-  // const editTaskInTasksList = (
+  // const editTaskInworkoutsList = (
   //   EditedWorkoutList: IWorkoutsList,
   //   replacedTask: IWorkout
   // ) => {
@@ -57,18 +57,18 @@ export default function Workouts() {
     <div className="flex flex-col w-full items-center">
       <p id="DUPA">{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
       <div className="mt-2 p-4 text-blue-600/75 text-center">
-        {tasksList && getTrainingWeekSummary(tasksList)}
+        {workoutsList && getTrainingWeekSummary(workoutsList)}
       </div>
       <div className="mt-2 p-4 text-blue-600/75 text-center">
         <h2>Motivational sentence for nerds</h2>
         <p className="transition-all">{motivationSentence}</p>
       </div>
 
-      {tasksList && (
+      {workoutsList && (
         <>
-          <WorkoutsContext.Provider value={{ tasksList, setTasksList }}>
+          <WorkoutsContext.Provider value={{ workoutsList, setWorkoutsList }}>
             <WorkoutsBarChart />
-            <TasksList />
+            <WorkoutsList />
           </WorkoutsContext.Provider>
         </>
       )}

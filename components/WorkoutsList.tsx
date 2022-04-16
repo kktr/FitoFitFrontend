@@ -4,17 +4,17 @@ import { WorkoutsContext } from '@pages/workouts';
 import { useContext } from 'react';
 import { IWorkoutsContext } from '@interfaces/IWorkoutsContext';
 
-export function TasksList(): JSX.Element {
-  const { tasksList, setTasksList } = useContext(
+export function WorkoutsList(): JSX.Element {
+  const { workoutsList, setWorkoutsList } = useContext(
     WorkoutsContext
   ) as IWorkoutsContext;
 
-  type IDeleteTaskInTasksList = (
+  type TDeleteTaskInTasksList = (
     tasksList: IWorkoutsList,
     taskToDelete: IWorkout
   ) => IWorkoutsList;
 
-  const deleteTaskInTasksList: IDeleteTaskInTasksList = (
+  const deleteTaskInTasksList: TDeleteTaskInTasksList = (
     EditedWorkoutList,
     deletedTask
   ) => {
@@ -24,9 +24,12 @@ export function TasksList(): JSX.Element {
   };
 
   return (
-    <ul id="tasksList" className="flex flex-col items-center w-full px-4">
-      {tasksList &&
-        tasksList.map((workout: IWorkout, index: number) => {
+    <>
+      <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 text-blue-600">
+        Your Activities
+      </h2>
+      <ul id="tasksList" className="flex flex-col items-center w-full px-4">
+        {workoutsList.map((workout: IWorkout, index: number) => {
           // ! TODO IMPLEMENT SORTING SOMEDAY
           // if (
           //   workoutsTypeToDisplay === workoutsType.Completed &&
@@ -88,8 +91,8 @@ export function TasksList(): JSX.Element {
                   id="buttonTaskDelete"
                   className={`button button_task button_task--delete inline-block px-3 py-2 bg-red-500 text-white font-medium text-xs leading-snug uppercase rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out`}
                   onClick={() => {
-                    setTasksList(
-                      deleteTaskInTasksList(tasksList, tasksList[index])
+                    setWorkoutsList(
+                      deleteTaskInTasksList(workoutsList, workoutsList[index])
                     );
                   }}
                 >
@@ -99,6 +102,7 @@ export function TasksList(): JSX.Element {
             </li>
           );
         })}
-    </ul>
+      </ul>
+    </>
   );
 }

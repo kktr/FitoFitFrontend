@@ -1,9 +1,9 @@
-import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
+import { IWorkoutsList } from '../interfaces/IWorkout';
 import moment from 'moment';
 import { ISortWorkoutsByDate } from '../interfaces/ISortWorkoutsByDate';
 
 export const sortWorkoutsByDate = (
-  tasksList: IWorkoutsList
+  workoutList: IWorkoutsList
 ): ISortWorkoutsByDate => {
   const workoutsLastWeekSummary: ISortWorkoutsByDate = {
     weekSummary: 0,
@@ -23,7 +23,7 @@ export const sortWorkoutsByDate = (
     return today.diff(moment(date), 'days');
   };
 
-  for (const workout of tasksList) {
+  for (const workout of workoutList) {
     const daysDifference = getDaysDifference(workout.data);
 
     if (daysDifference > 14) {

@@ -1,44 +1,39 @@
-import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
-import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
-import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
+import DatePicker from 'react-datepicker';
 import { Workout } from 'dtos/workout';
+import 'react-datepicker/dist/react-datepicker.css';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 export default function AddWorkout() {
-  const [tasksList, setTasksList] = useState<IWorkoutsList | null>(null);
+  const [workoutList, setWorkoutList] = useState<IWorkoutsList | null>(null);
   const [hightestId, setHightestId] = useState<number>(0);
-
   const {
     control,
     register,
     handleSubmit,
     reset,
-    getValues,
-    formState,
     formState: { errors },
-  } = useForm<Workout>({ resolver: classValidatorResolver(Workout) });
-
+  } = useForm<Workout>({
+    resolver: classValidatorResolver(Workout),
+  });
   useEffect(() => {
     if (localStorage.getItem('workoutsList') !== null) {
       const items = JSON.parse(localStorage.getItem('workoutsList')!);
-
-      items && setTasksList(items);
+      items && setWorkoutList(items);
     }
   }, []);
-
   useEffect(() => {
-    const lastWorkoutID = tasksList && tasksList[tasksList?.length - 1]?.id;
-    tasksList && lastWorkoutID !== null && lastWorkoutID !== undefined
+    const lastWorkoutID = workoutList && workoutList[workoutList.length - 1].id;
+    workoutList && lastWorkoutID !== null && lastWorkoutID !== undefined
       ? setHightestId(lastWorkoutID)
       : setHightestId(0);
-  }, [tasksList]);
-
+  }, [workoutList]);
   useEffect(() => {
-    localStorage.setItem('workoutsList', JSON.stringify(tasksList));
-  }, [tasksList]);
+    localStorage.setItem('workoutsList', JSON.stringify(workoutList));
+  }, [workoutList]);
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -49,7 +44,6 @@ export default function AddWorkout() {
       +data.duration,
       data.type ? data.type : 'General'
     );
-
     reset();
   };
 
@@ -69,11 +63,9 @@ export default function AddWorkout() {
       data: newWorkoutData,
       description: newWorkoutDescription,
     };
-
-    tasksList !== null && tasksList.length > 0
-      ? setTasksList([...tasksList, newWorkout])
-      : setTasksList([newWorkout]);
-
+    workoutList !== null && workoutList.length > 0
+      ? setWorkoutList([...workoutList, newWorkout])
+      : setWorkoutList([newWorkout]);
     setHightestId((previousHightestId) => previousHightestId + 1);
   };
 

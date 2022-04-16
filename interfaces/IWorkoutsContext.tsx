@@ -1,8 +1,9 @@
+import moment from 'moment';
 import { IWorkoutsList } from './IWorkout';
 
 export interface IWorkoutsContext {
-  tasksList: IWorkoutsList;
-  setTasksList: (workouts: IWorkoutsList) => void;
+  workoutsList: IWorkoutsList;
+  setWorkoutsList: (workouts: IWorkoutsList) => void;
 }
 const date = moment();
 

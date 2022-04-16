@@ -13,14 +13,14 @@ import {
 } from 'recharts';
 
 export function WorkoutsBarChart() {
-  const { tasksList } = useContext(WorkoutsContext) as IWorkoutsContext;
+  const { workoutsList } = useContext(WorkoutsContext) as IWorkoutsContext;
 
   return (
     <BarChart
       className="flex w-full mb-8 "
       width={400}
       height={300}
-      data={tasksList && getWorkoutsChartData(tasksList)}
+      data={workoutsList && getWorkoutsChartData(workoutsList)}
       margin={{
         top: 20,
         right: 25,
