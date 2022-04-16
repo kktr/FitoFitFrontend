@@ -1,19 +1,10 @@
 import { TasksList } from './../components/TasksList';
 import React, { createContext, useEffect, useState } from 'react';
 import { IWorkoutsList } from '../interfaces/IWorkout';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
 import { getTrainingWeekSummary } from '../helpers/getTrainingWeekSummary';
-import { getWorkoutsChartData } from '../helpers/getWorkoutsChartData';
 import Link from 'next/link';
 import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
 
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 
@@ -72,37 +63,11 @@ export default function Workouts() {
         <h2>Motivational sentence for nerds</h2>
         <p className="transition-all">{motivationSentence}</p>
       </div>
-      <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 text-blue-600">
-        Your Activities
-      </h2>
 
       {tasksList && (
         <>
-          <div className="flex w-full mb-8 ">
-            <BarChart
-              width={400}
-              height={300}
-              data={tasksList && getWorkoutsChartData(tasksList)}
-              margin={{
-                top: 20,
-                right: 25,
-                left: 0,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="all" stackId="a" fill="#8884d8" />
-              <Bar dataKey="general" stackId="a" fill="#7766cd" />
-              <Bar dataKey="cardio" stackId="a" fill="#229dca" />
-              <Bar dataKey="cycling" stackId="a" fill="#829dca" />
-              <Bar dataKey="running" stackId="a" fill="#82ca9d" />
-            </BarChart>
-          </div>
           <WorkoutsContext.Provider value={{ tasksList, setTasksList }}>
+            <WorkoutsBarChart />
             <TasksList />
           </WorkoutsContext.Provider>
         </>
