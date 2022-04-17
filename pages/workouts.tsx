@@ -1,19 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { IMotivationSentenceContext } from '../interfaces/IMotivationSentenceContext';
 import { IWorkoutsList } from '../interfaces/IWorkout';
 import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+import { MotivationSentence } from '../components/MotivationSentence';
 import { WorkoutsWeekSummary } from '../components/WorkoutsWeekSummary';
 import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
 import { WorkoutsList } from './../components/WorkoutsList';
 import { getMotivationSentence } from '../helpers/getMotivationSentence';
 
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
+export const MotivationSentenceContext =
+  createContext<IMotivationSentenceContext>({ getMotivationSentence });
 
 export default function Workouts() {
   const [workoutsList, setWorkoutsList] = useState<IWorkoutsList | null>(null);
-  const [motivationSentence, setMotivationSentence] = useState<string>(
-    'Training is the key to success'
-  );
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('workoutsList')!);
@@ -26,16 +27,6 @@ export default function Workouts() {
   useEffect(() => {
     localStorage.setItem('workoutsList', JSON.stringify(workoutsList));
   }, [workoutsList]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      getMotivationSentence().then((quote) => {
-        setMotivationSentence(quote);
-      });
-    }, 10_000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   // ! TODO: implement EDITING someday
   // const editTaskInworkoutsList = (
@@ -51,11 +42,7 @@ export default function Workouts() {
     <div className="flex flex-col w-full items-center">
       <p id="DUPA">{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
 
-      <h2 className="mt-2 p-4 text-blue-600/75 text-center">
-        Motivational sentence for nerds
-      </h2>
-
-      <p className="transition-all">{motivationSentence}</p>
+      <MotivationSentence />
 
       {workoutsList && (
         <main>
@@ -68,7 +55,6 @@ export default function Workouts() {
           </WorkoutsContext.Provider>
         </main>
       )}
-
       <Link
         href={{
           pathname: '/addworkout',
@@ -82,7 +68,6 @@ export default function Workouts() {
           Add workout
         </a>
       </Link>
-
       {/* ! IMPLEMENT SORTING */}
       {/* <button
         id="buttonTypeDisplayAll"
