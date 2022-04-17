@@ -1,10 +1,10 @@
-import { WorkoutsList } from './../components/WorkoutsList';
 import React, { createContext, useEffect, useState } from 'react';
-import { IWorkoutsList } from '../interfaces/IWorkout';
-import { getTrainingWeekSummary } from '../helpers/getTrainingWeekSummary';
 import Link from 'next/link';
+import { IWorkoutsList } from '../interfaces/IWorkout';
 import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+import { WorkoutsWeekSummary } from '../components/WorkoutsWeekSummary';
 import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
+import { WorkoutsList } from './../components/WorkoutsList';
 
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 
@@ -56,21 +56,23 @@ export default function Workouts() {
   return (
     <div className="flex flex-col w-full items-center">
       <p id="DUPA">{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
-      <div className="mt-2 p-4 text-blue-600/75 text-center">
-        {workoutsList && getTrainingWeekSummary(workoutsList)}
-      </div>
-      <div className="mt-2 p-4 text-blue-600/75 text-center">
-        <h2>Motivational sentence for nerds</h2>
-        <p className="transition-all">{motivationSentence}</p>
-      </div>
+
+      <h2 className="mt-2 p-4 text-blue-600/75 text-center">
+        Motivational sentence for nerds
+      </h2>
+
+      <p className="transition-all">{motivationSentence}</p>
 
       {workoutsList && (
-        <>
+        <main>
           <WorkoutsContext.Provider value={{ workoutsList, setWorkoutsList }}>
+            <WorkoutsWeekSummary />
+
             <WorkoutsBarChart />
+
             <WorkoutsList />
           </WorkoutsContext.Provider>
-        </>
+        </main>
       )}
 
       <Link

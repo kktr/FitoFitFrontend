@@ -1,7 +1,7 @@
 import { IWorkoutsList } from '../interfaces/IWorkout';
 import { sortWorkoutsByDate } from './sortWorkoutsByDate';
 
-export const getTrainingWeekSummary = (tasksList: IWorkoutsList) => {
+export const getWorkoutsWeekSummary = (tasksList: IWorkoutsList) => {
   const trainingLevels = [
     'a Coach potato',
     'a Beginner',

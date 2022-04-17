@@ -24,23 +24,13 @@ export function WorkoutsList(): JSX.Element {
   };
 
   return (
-    <>
+    <section>
       <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 text-blue-600">
         Your Activities
       </h2>
+
       <ul id="tasksList" className="flex flex-col items-center w-full px-4">
         {workoutsList.map((workout: IWorkout, index: number) => {
-          // ! TODO IMPLEMENT SORTING SOMEDAY
-          // if (
-          //   workoutsTypeToDisplay === workoutsType.Completed &&
-          //   workout.status === StatusType.Active
-          // )
-          //   return;
-          // if (
-          //   workoutsTypeToDisplay === workoutsType.Uncompleted &&
-          //   workout.status === StatusType.Completed
-          // )
-          //   return;
           return (
             <li
               className={`workout workout--${workout.id} flex flex-col p-4 w-full border border-gray-100 rounded-xl bg-gray-50 sm:flex sm:space-x-8 sm:p-8 mb-4`}
@@ -58,12 +48,13 @@ export function WorkoutsList(): JSX.Element {
                         height={128}
                       ></Image>
                     </div>
-                    <div className="font-medium leading-tight text-base mt-0 mb-2 text-blue-600">
+
+                    <p className="font-medium leading-tight text-base mt-0 mb-2 text-blue-600">
                       {workout.type}
-                    </div>
+                    </p>
                   </div>
 
-                  <div
+                  <p
                     className={`workout_type workout_type--${workout.type} font-medium leading-tight text-xs mt-0 mb-2 text-gray-500`}
                   >
                     {workout.data &&
@@ -73,15 +64,16 @@ export function WorkoutsList(): JSX.Element {
                         month: 'long',
                         day: 'numeric',
                       })}
-                  </div>
+                  </p>
                 </div>
 
                 <div className="flex justify-between py-2">
-                  <div>{workout.title}</div>
-                  <div>{workout.duration} minutes</div>
+                  <h3>{workout.title}</h3>
+
+                  <p>{workout.duration} minutes</p>
                 </div>
 
-                <div>{workout.description}</div>
+                <p>{workout.description}</p>
               </div>
 
               <div
@@ -103,6 +95,6 @@ export function WorkoutsList(): JSX.Element {
           );
         })}
       </ul>
-    </>
+    </section>
   );
 }

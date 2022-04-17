@@ -1,4 +1,5 @@
-import { IWorkout, IWorkoutsType, workoutsTypes } from '../interfaces/IWorkout';
+import { IWorkout } from '../interfaces/IWorkout';
+import { IWorkoutsType, workoutsTypes } from '../interfaces/IWorkoutsType';
 
 import {
   IsInt,

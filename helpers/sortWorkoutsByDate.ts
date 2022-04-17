@@ -66,19 +66,21 @@ export const sortWorkoutsByDate = (
   return workoutsLastWeekSummary;
 };
 
-const date = moment();
+// TODO - idea how sortWorkoutsByDate
+
+const dateData = moment();
 
 const arrayOfDays = [
-  [date, date, date],
-  [date, date],
-  [date],
-  [date],
-  [date],
-  [date],
-  [date],
-  [date, date, date, date, date],
-  [date, date, date, date, date],
-  [date],
+  [dateData, dateData, dateData],
+  [dateData, dateData],
+  [dateData],
+  [dateData],
+  [dateData],
+  [dateData],
+  [dateData],
+  [dateData, dateData, dateData, dateData, dateData],
+  [dateData, dateData, dateData, dateData, dateData],
+  [dateData],
 ];
 
 const getNumberOfWorkouts = (givenArray: any[], from: number, to: number) => {

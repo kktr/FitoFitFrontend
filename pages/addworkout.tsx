@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { IWorkoutsList, IWorkoutsType } from '../interfaces/IWorkout';
+import { IWorkoutsList } from '../interfaces/IWorkout';
+import { IWorkoutsType } from '../interfaces/IWorkoutsType';
 import DatePicker from 'react-datepicker';
 import { Workout } from 'dtos/workout';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -19,18 +20,21 @@ export default function AddWorkout() {
   } = useForm<Workout>({
     resolver: classValidatorResolver(Workout),
   });
+
   useEffect(() => {
     if (localStorage.getItem('workoutsList') !== null) {
       const items = JSON.parse(localStorage.getItem('workoutsList')!);
       items && setWorkoutList(items);
     }
   }, []);
+
   useEffect(() => {
     const lastWorkoutID = workoutList && workoutList[workoutList.length - 1].id;
     workoutList && lastWorkoutID !== null && lastWorkoutID !== undefined
       ? setHightestId(lastWorkoutID)
       : setHightestId(0);
   }, [workoutList]);
+
   useEffect(() => {
     localStorage.setItem('workoutsList', JSON.stringify(workoutList));
   }, [workoutList]);
@@ -77,6 +81,7 @@ export default function AddWorkout() {
             <h3 className="text-lg font-medium leading-6 text-gray-900">
               Add Workout
             </h3>
+
             <p className="mt-1 text-sm text-gray-600">
               This information will be displayed publicly so be careful what you
               share.
@@ -126,6 +131,7 @@ export default function AddWorkout() {
                     </span>
                   )}
                 </div>
+
                 <div className="flex flex-col mb-4 md:w-full">
                   <Controller
                     control={control}
@@ -152,6 +158,7 @@ export default function AddWorkout() {
                     Workout type
                   </legend>
                 </div>
+
                 <div className="mt-4 space-y-4">
                   <div className="flex items-center">
                     <input
@@ -168,6 +175,7 @@ export default function AddWorkout() {
                       General
                     </label>
                   </div>
+
                   <div className="flex items-center">
                     <input
                       {...register('type')}
@@ -227,6 +235,7 @@ export default function AddWorkout() {
                   >
                     Describe your training
                   </label>
+
                   <div className="mt-1">
                     <textarea
                       {...register('description')}
