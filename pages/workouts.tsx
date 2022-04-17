@@ -5,6 +5,7 @@ import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
 import { WorkoutsWeekSummary } from '../components/WorkoutsWeekSummary';
 import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
 import { WorkoutsList } from './../components/WorkoutsList';
+import { getMotivationSentence } from '../helpers/getMotivationSentence';
 
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 
@@ -26,18 +27,11 @@ export default function Workouts() {
     localStorage.setItem('workoutsList', JSON.stringify(workoutsList));
   }, [workoutsList]);
 
-  const getMotivationSentence = async () => {
-    const BASE_URL = 'https://nodejs-quoteapp.herokuapp.com/quote';
-    const CROSS_DOMAIN = 'https://kktrcorsproxy.herokuapp.com';
-    const response = await fetch(`${CROSS_DOMAIN}/${BASE_URL}`);
-    const data = await response.json();
-
-    setMotivationSentence(data.quote);
-  };
-
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getMotivationSentence();
+      getMotivationSentence().then((quote) => {
+        setMotivationSentence(quote);
+      });
     }, 10_000);
 
     return () => clearInterval(intervalId);
