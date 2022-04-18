@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { IWorkout } from '../interfaces/IWorkout';
 
-type IWorkoutsType = 'Cardio' | 'Cycling' | 'Running' | 'General';
+export type IWorkoutsType = 'Cardio' | 'Cycling' | 'Running' | 'General';
 
 const workoutsTypes: IWorkoutsType[] = [
   'General',

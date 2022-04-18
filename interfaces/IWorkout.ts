@@ -1,4 +1,4 @@
-import { IWorkoutsType } from './IWorkoutsType';
+import { IWorkoutsType } from 'dtos/workout';
 
 export type IWorkoutsList = IWorkout[];
 export interface IWorkout {
