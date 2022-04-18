@@ -6,7 +6,9 @@ import '@nextcss/reset';
 const Home: NextPage = () => {
   return (
     <div
-      className={'h-screen flex flex-col justify-between items-center max-w-xs'}
+      className={
+        'h-screen flex flex-col items-center justify-center  max-w-xs m-auto'
+      }
     >
       <Image
         alt="people training"

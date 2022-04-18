@@ -28,7 +28,7 @@ export function WorkoutsList(): JSX.Element {
 
   return (
     <section>
-      <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 text-blue-600">
+      <h2 className="font-medium leading-tight text-3xl mt-4 mb-2 ml-4 text-blue-600">
         Your Activities
       </h2>
 
