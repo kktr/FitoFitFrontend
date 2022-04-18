@@ -88,6 +88,28 @@ describe(AddWorkout.name, () => {
       expect(descriptionInputElement.value).toBe('');
     });
   });
-});
 
-// minimum allowed date is 2022-01-01
+  describe('tests for form fields typing', () => {
+    it('should be able to type title', async () => {
+      const titleInputElement = context.getByPlaceholderText(/title/i);
+      await userEvent.type(titleInputElement, 'test title');
+      expect(titleInputElement.value).toBe('test title');
+    });
+    it('should be able to type duration', async () => {
+      const durationInputElement = context.getByPlaceholderText(/duration/i);
+      await userEvent.type(durationInputElement, '123');
+      expect(durationInputElement.value).toBe('123');
+    });
+    it('should be able to type date', async () => {
+      const now = new Date().toISOString();
+      const dateInputElement = context.getByPlaceholderText(/date/i);
+      await userEvent.type(dateInputElement, now);
+      expect(dateInputElement.value).toBe(now);
+    });
+    it('should be able to type description', async () => {
+      const descriptionInputElement = context.getByLabelText(/Describe/i);
+      await userEvent.type(descriptionInputElement, 'test description');
+      expect(descriptionInputElement.value).toBe('test description');
+    });
+  });
+});
