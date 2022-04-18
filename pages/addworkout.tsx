@@ -108,7 +108,9 @@ export default function AddWorkout() {
                     {...register('title')}
                   />
                   {errors.title && (
-                    <span className="text-red-500">{errors.title.message}</span>
+                    <span role="alert" className="text-red-500">
+                      {errors.title.message}
+                    </span>
                   )}
                 </div>
 
@@ -126,7 +128,7 @@ export default function AddWorkout() {
                     })}
                   />
                   {errors.duration && (
-                    <span className="text-red-500">
+                    <span role="alert" className="text-red-500">
                       {errors.duration.message}
                     </span>
                   )}
@@ -140,6 +142,7 @@ export default function AddWorkout() {
                       <DatePicker
                         className="border py-2 px-3 text-grey-darkest"
                         dateFormat="yyyy-MM-dd"
+                        minDate={new Date('2022-01-01')}
                         maxDate={new Date()}
                         placeholderText="Select date"
                         onChange={(date) => field.onChange(date)}
@@ -149,7 +152,9 @@ export default function AddWorkout() {
                     )}
                   />
                   {errors.data && (
-                    <span className="text-red-500">{errors.data.message}</span>
+                    <span role="alert" className="text-red-500">
+                      {errors.data.message}
+                    </span>
                   )}
                 </div>
 
@@ -162,6 +167,7 @@ export default function AddWorkout() {
                 <div className="mt-4 space-y-4">
                   <div className="flex items-center">
                     <input
+                      checked
                       id="general"
                       {...register('type')}
                       type="radio"
@@ -224,7 +230,9 @@ export default function AddWorkout() {
                     </label>
                   </div>
                   {errors.type && (
-                    <span className="text-red-500">{errors.type.message}</span>
+                    <span role="alert" className="text-red-500">
+                      {errors.type.message}
+                    </span>
                   )}
                 </div>
 
@@ -244,7 +252,7 @@ export default function AddWorkout() {
                       className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="you@example.com"'
                     />
                     {errors.description && (
-                      <span className="text-red-500">
+                      <span role="alert" className="text-red-500">
                         {errors.description.message}
                       </span>
                     )}
