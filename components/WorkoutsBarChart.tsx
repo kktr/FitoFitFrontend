@@ -17,7 +17,7 @@ export function WorkoutsBarChart() {
 
   return (
     <BarChart
-      className="flex w-full mb-8 "
+      className="flex w-full m-auto mb-8"
       width={400}
       height={300}
       data={workoutsList && getWorkoutsChartData(workoutsList)}

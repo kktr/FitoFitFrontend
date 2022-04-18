@@ -19,7 +19,7 @@ export function MotivationSentence() {
   }, [getMotivationSentence]);
 
   return (
-    <div>
+    <div className="text-center">
       <h2 className="mt-2 p-4 text-blue-600/75 text-center">
         Motivational sentence for nerds
       </h2>

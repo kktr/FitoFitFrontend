@@ -22,7 +22,7 @@ export default function Workouts() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col items-center justify-center max-w-m m-auto">
       <p id="DUPA">{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
 
       <MotivationSentence />
