@@ -31,19 +31,24 @@ export class WorkoutsApi extends WorkoutsApiAbstract {
   }
 
   static async list() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}`);
+    const response = await fetch(
+      `https://radiant-river-13841.herokuapp.com/workouts/`
+    );
     return response.json();
   }
 
   static async delete(workoutId: number) {
-    await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}${workoutId}`, {
-      method: 'DELETE',
-    });
+    await fetch(
+      `https://radiant-river-13841.herokuapp.com/workouts/${workoutId}`,
+      {
+        method: 'DELETE',
+      }
+    );
   }
 
   static async update(workout: IWorkoutForApi) {
     await this.postJson(
-      `${process.env.NEXT_PUBLIC_DB_HOST}${workout.id}`,
+      `https://radiant-river-13841.herokuapp.com/workouts/${workout.id}`,
       'PATCH',
       workout
     );
@@ -52,7 +57,7 @@ export class WorkoutsApi extends WorkoutsApiAbstract {
 
   static async create(workout: IWorkoutForApi) {
     const response = await this.postJson(
-      `${process.env.NEXT_PUBLIC_DB_HOST}`,
+      `https://radiant-river-13841.herokuapp.com/workouts/`,
       'POST',
       workout
     );
