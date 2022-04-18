@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomePage, HomePageContext } from './HomePage';
+import HomePage, { HomePageContext } from 'pages/homePage';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect } from '@jest/globals';

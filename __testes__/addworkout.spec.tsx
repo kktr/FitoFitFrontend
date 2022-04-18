@@ -3,7 +3,7 @@ import { act, render, RenderResult, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect } from '@jest/globals';
 import '@testing-library/jest-dom';
-import AddWorkout from './addworkout';
+import AddWorkout from 'pages/addworkout';
 
 describe(AddWorkout.name, () => {
   let context: RenderResult<

@@ -18,10 +18,15 @@
     "types": ["cypress", "node", "@types/react-datepicker"],
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.tsx"],
   "moduleNameMapper": {
     "\\.(css|less|scss|sass)$": "<rootDir>/styles/__mocks__/styleMock.js",
     "^@pages/(.*)$": "<rootDir>/pages/$1",

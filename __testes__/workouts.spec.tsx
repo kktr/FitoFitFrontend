@@ -1,13 +1,13 @@
 import React from 'react';
 import { act, render, RenderResult } from '@testing-library/react';
 import { expect } from '@jest/globals';
-import { MotivationSentenceContext } from './workouts';
 import '@testing-library/jest-dom';
-import { MotivationSentence } from '../components/MotivationSentence';
+import { MotivationSentence } from 'components/MotivationSentence';
+import { MotivationSentenceContext } from 'pages/workouts';
 
 describe(MotivationSentence.name, () => {
   let context: RenderResult<
-    typeof import('../node_modules/@testing-library/dom/types/queries'),
+    typeof import('@testing-library/dom/types/queries'),
     HTMLElement,
     HTMLElement
   >;
