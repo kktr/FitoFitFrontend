@@ -4,6 +4,7 @@ import { WorkoutsContext } from '../pages/workouts';
 import { useContext } from 'react';
 import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
 import { WorkoutsApi } from '../dtos/WorkoutsApi';
+import { getWorkoutImageByType } from 'helpers/getWorkoutImageByType';
 
 export function WorkoutsList(): JSX.Element {
   const { workoutsList, setWorkoutsList } = useContext(
@@ -44,7 +45,9 @@ export function WorkoutsList(): JSX.Element {
                     <div className=" w-6 mr-2">
                       <Image
                         alt="running icon"
-                        src={`/../public/${workout.type}.png`}
+                        src={`${
+                          workout.type && getWorkoutImageByType(workout.type)
+                        }`}
                         objectFit="cover"
                         width={128}
                         height={128}

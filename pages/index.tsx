@@ -10,7 +10,7 @@ const Home: NextPage = () => {
     >
       <Image
         alt="people training"
-        src="/../public/illustration.png"
+        src="https://i.ibb.co/z8t3cTQ/illustration.png"
         objectFit="cover"
         width={1656}
         height={1968}
