@@ -1,6 +1,3 @@
-import { IWorkout } from '../interfaces/IWorkout';
-import { IWorkoutsType, workoutsTypes } from '../interfaces/IWorkoutsType';
-
 import {
   IsInt,
   IsString,
@@ -13,6 +10,16 @@ import {
   IsIn,
   MinDate,
 } from 'class-validator';
+import { IWorkout } from '../interfaces/IWorkout';
+
+type IWorkoutsType = 'Cardio' | 'Cycling' | 'Running' | 'General';
+
+const workoutsTypes: IWorkoutsType[] = [
+  'General',
+  'Cardio',
+  'Cycling',
+  'Running',
+];
 
 export class Workout implements IWorkout {
   id!: number;
