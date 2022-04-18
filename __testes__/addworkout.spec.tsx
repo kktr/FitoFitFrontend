@@ -6,6 +6,10 @@ import '@testing-library/jest-dom';
 import AddWorkout from 'pages/addworkout';
 
 describe(AddWorkout.name, () => {
+  const mockLogin = jest.fn((title, duration, data, type, description) => {
+    return Promise.resolve({ title, duration, data, type, description });
+  });
+
   let context: RenderResult<
     typeof import('@testing-library/dom/types/queries'),
     HTMLElement,

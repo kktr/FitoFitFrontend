@@ -23,9 +23,13 @@ export default function Workouts() {
 
   return (
     <div className="flex flex-col items-center justify-center max-w-m m-auto">
+<<<<<<< HEAD
       <p className="mt-4 text-red-600" id="DUPA">
         {process.env.NEXT_PUBLIC_ANALYTICS_ID}
       </p>
+=======
+      <p id="DUPA">{process.env.NEXT_PUBLIC_ANALYTICS_ID}</p>
+>>>>>>> e19b7d4886ad046ffe5bfcebbb8fceee23702415
 
       <MotivationSentence />
 
