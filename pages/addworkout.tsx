@@ -1,16 +1,12 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { IWorkoutsList } from '../interfaces/IWorkout';
-import { IWorkoutsType } from '../interfaces/IWorkoutsType';
 import DatePicker from 'react-datepicker';
 import { Workout } from 'dtos/workout';
 import 'react-datepicker/dist/react-datepicker.css';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { WorkoutsApi } from '../dtos/WorkoutsApi';
 
 export default function AddWorkout() {
-  const [workoutList, setWorkoutList] = useState<IWorkoutsList | null>(null);
-  const [hightestId, setHightestId] = useState<number>(0);
   const {
     control,
     register,
@@ -21,56 +17,15 @@ export default function AddWorkout() {
     resolver: classValidatorResolver(Workout),
   });
 
-  useEffect(() => {
-    if (localStorage.getItem('workoutsList') !== null) {
-      const items = JSON.parse(localStorage.getItem('workoutsList')!);
-      items && setWorkoutList(items);
-    }
-  }, []);
-
-  useEffect(() => {
-    const lastWorkoutID = workoutList && workoutList[workoutList.length - 1].id;
-    workoutList && lastWorkoutID !== null && lastWorkoutID !== undefined
-      ? setHightestId(lastWorkoutID)
-      : setHightestId(0);
-  }, [workoutList]);
-
-  useEffect(() => {
-    localStorage.setItem('workoutsList', JSON.stringify(workoutList));
-  }, [workoutList]);
-
   const onSubmit = (data: any) => {
-    console.log(data);
-    addWorkout(
-      data.title,
-      data.data.toISOString().slice(0, 10),
-      data.description,
-      +data.duration,
-      data.type ? data.type : 'General'
-    );
+    WorkoutsApi.create({
+      title: data.title,
+      data: data.data.toISOString().slice(0, 10),
+      duration: +data.duration,
+      description: data.description,
+      type: data.type,
+    });
     reset();
-  };
-
-  const addWorkout = (
-    newWorkoutTitle: string,
-    newWorkoutData: string,
-    newWorkoutDescription: string,
-    newWorkoutDuration: number,
-    newWorkoutType: IWorkoutsType = 'General'
-  ) => {
-    const newId = hightestId + 1;
-    const newWorkout = {
-      id: newId,
-      title: newWorkoutTitle,
-      duration: newWorkoutDuration,
-      type: newWorkoutType,
-      data: newWorkoutData,
-      description: newWorkoutDescription,
-    };
-    workoutList !== null && workoutList.length > 0
-      ? setWorkoutList([...workoutList, newWorkout])
-      : setWorkoutList([newWorkout]);
-    setHightestId((previousHightestId) => previousHightestId + 1);
   };
 
   return (

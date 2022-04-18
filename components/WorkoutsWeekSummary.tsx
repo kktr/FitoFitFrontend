@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { WorkoutsContext } from '@pages/workouts';
-import { IWorkoutsContext } from '@interfaces/IWorkoutsContext';
+import { WorkoutsContext } from '../pages/workouts';
+import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
 import { getWorkoutsWeekSummary } from '../helpers/getWorkoutsWeekSummary';
 
 export function WorkoutsWeekSummary() {

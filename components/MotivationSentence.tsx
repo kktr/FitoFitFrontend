@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { MotivationSentenceContext } from '@pages/workouts';
+import { MotivationSentenceContext } from '../pages/workouts';
 
 export function MotivationSentence() {
   const [motivationSentence, setMotivationSentence] = useState<string>(
@@ -16,7 +16,7 @@ export function MotivationSentence() {
     }, 10_000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [getMotivationSentence]);
 
   return (
     <div>
@@ -24,7 +24,9 @@ export function MotivationSentence() {
         Motivational sentence for nerds
       </h2>
 
-      <p className="transition-all">{motivationSentence}</p>
+      <p className="transition-all" data-testid="motivationSentenceEl">
+        {motivationSentence}
+      </p>
     </div>
   );
 }

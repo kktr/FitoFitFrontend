@@ -1,8 +1,7 @@
 import React from 'react';
 import { act, render, RenderResult } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { expect } from '@jest/globals';
-import Workouts, { MotivationSentenceContext } from './workouts';
+import { MotivationSentenceContext } from './workouts';
 import '@testing-library/jest-dom';
 import { MotivationSentence } from '../components/MotivationSentence';
 

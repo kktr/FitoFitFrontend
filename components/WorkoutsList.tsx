@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { IWorkout, IWorkoutsList } from '../interfaces/IWorkout';
-import { WorkoutsContext } from '@pages/workouts';
+import { WorkoutsContext } from '../pages/workouts';
 import { useContext } from 'react';
-import { IWorkoutsContext } from '@interfaces/IWorkoutsContext';
+import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+import { WorkoutsApi } from '../dtos/WorkoutsApi';
 
 export function WorkoutsList(): JSX.Element {
   const { workoutsList, setWorkoutsList } = useContext(
@@ -18,6 +19,7 @@ export function WorkoutsList(): JSX.Element {
     EditedWorkoutList,
     deletedTask
   ) => {
+    WorkoutsApi.delete(deletedTask.id);
     return EditedWorkoutList.filter(
       (Task: { id: number }) => Task.id !== deletedTask.id
     );

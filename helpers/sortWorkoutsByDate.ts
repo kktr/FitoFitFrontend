@@ -61,8 +61,6 @@ export const sortWorkoutsByDate = (
     }
   }
 
-  console.log(workoutsLastWeekSummary.weekSummary);
-
   return workoutsLastWeekSummary;
 };
 
@@ -98,11 +96,11 @@ const getNumberOfWorkouts = (givenArray: any[], from: number, to: number) => {
   return countWorkouts;
 };
 
-// today return 3
-console.log(getNumberOfWorkouts(arrayOfDays, 0, 0));
-// current week return 10
-console.log(getNumberOfWorkouts(arrayOfDays, 0, 6));
-// 7 days ago return 5
-console.log(getNumberOfWorkouts(arrayOfDays, 7, 7));
-// previous week return 11
-console.log(getNumberOfWorkouts(arrayOfDays, 7, 13));
+// // today return 3
+// console.log(getNumberOfWorkouts(arrayOfDays, 0, 0));
+// // current week return 10
+// console.log(getNumberOfWorkouts(arrayOfDays, 0, 6));
+// // 7 days ago return 5
+// console.log(getNumberOfWorkouts(arrayOfDays, 7, 7));
+// // previous week return 11
+// console.log(getNumberOfWorkouts(arrayOfDays, 7, 13));

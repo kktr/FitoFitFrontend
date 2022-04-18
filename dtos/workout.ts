@@ -11,6 +11,7 @@ import {
   Min,
   Max,
   IsIn,
+  MinDate,
 } from 'class-validator';
 
 export class Workout implements IWorkout {
@@ -28,6 +29,9 @@ export class Workout implements IWorkout {
   })
   duration!: number;
 
+  @MinDate(new Date('2021-12-31T00:00:00.000Z'), {
+    message: 'minimum allowed date is 2022-01-01',
+  })
   @IsDate({
     message: 'select the date of the workout',
   })

@@ -8,6 +8,7 @@ import { WorkoutsWeekSummary } from '../components/WorkoutsWeekSummary';
 import { WorkoutsBarChart } from '../components/WorkoutsBarChart';
 import { WorkoutsList } from './../components/WorkoutsList';
 import { getMotivationSentence } from '../helpers/getMotivationSentence';
+import { WorkoutsApi } from '../dtos/WorkoutsApi';
 
 export const WorkoutsContext = createContext<IWorkoutsContext | null>(null);
 export const MotivationSentenceContext =
@@ -17,26 +18,8 @@ export default function Workouts() {
   const [workoutsList, setWorkoutsList] = useState<IWorkoutsList | null>(null);
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('workoutsList')!);
-    if (items) {
-      setWorkoutsList(items);
-      console.log(items);
-    }
+    WorkoutsApi.list().then((workouts) => setWorkoutsList(workouts));
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem('workoutsList', JSON.stringify(workoutsList));
-  }, [workoutsList]);
-
-  // ! TODO: implement EDITING someday
-  // const editTaskInworkoutsList = (
-  //   EditedWorkoutList: IWorkoutsList,
-  //   replacedTask: IWorkout
-  // ) => {
-  //   return EditedWorkoutList.map((task) => {
-  //     return task.id === replacedTask.id ? replacedTask : task;
-  //   });
-  // };
 
   return (
     <div className="flex flex-col w-full items-center">
@@ -68,36 +51,6 @@ export default function Workouts() {
           Add workout
         </a>
       </Link>
-      {/* ! IMPLEMENT SORTING */}
-      {/* <button
-        id="buttonTypeDisplayAll"
-        className={`button button_type-display button_type-display--all`}
-        onClick={() => {
-          setTasksTypeToDisplay(TasksType.All);
-        }}
-      >
-        ALL
-      </button>
-
-      <button
-        id="buttonTypeDisplayTodo"
-        className={`button button_type-display button_type-display--todo`}
-        onClick={() => {
-          setTasksTypeToDisplay(TasksType.Uncompleted);
-        }}
-      >
-        TODO
-      </button>
-
-      <button
-        id="buttonTypeDisplayDone"
-        className={`button button_type-display button_type-display--done`}
-        onClick={() => {
-          setTasksTypeToDisplay(TasksType.Completed);
-        }}
-      >
-        DONE
-      </button> */}
     </div>
   );
 }

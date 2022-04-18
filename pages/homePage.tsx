@@ -1,12 +1,14 @@
 import type { NextPage } from 'next';
 import React, { useContext, useEffect, useState } from 'react';
 
-export const HomePageContext = React.createContext<{
+interface IHomePageContext {
   getValue: () => Promise<string>;
   getText: (inputValue: string) => Promise<string>;
-}>({
+}
+
+export const HomePageContext = React.createContext<IHomePageContext>({
   getValue: async () => 'Default',
-  getText: async (inputValue: string) => `Z serwera: ${inputValue}`,
+  getText: async (inputValue) => `Z serwera: ${inputValue}`,
 });
 
 export const HomePage: NextPage = () => {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { IWorkoutsContext } from '@interfaces/IWorkoutsContext';
-import { WorkoutsContext } from '@pages/workouts';
+import { IWorkoutsContext } from '../interfaces/IWorkoutsContext';
+import { WorkoutsContext } from '../pages/workouts';
 import { getWorkoutsChartData } from '../helpers/getWorkoutsChartData';
 import {
   BarChart,

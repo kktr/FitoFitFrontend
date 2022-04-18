@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  act,
-  render,
-  screen,
-  RenderResult,
-  fireEvent,
-} from '@testing-library/react';
+import { act, render, RenderResult, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect } from '@jest/globals';
 import '@testing-library/jest-dom';
 import AddWorkout from './addworkout';
-import { debug } from 'console';
 
 describe(AddWorkout.name, () => {
   let context: RenderResult<
