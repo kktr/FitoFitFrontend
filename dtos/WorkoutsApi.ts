@@ -1,4 +1,4 @@
-export interface IWorkout {
+interface IWorkoutForApi {
   id?: number;
   title?: string;
   duration?: number;
@@ -7,14 +7,19 @@ export interface IWorkout {
   description?: string;
 }
 
-interface IWorkoutApi {
-  list: () => Promise<IWorkout[]>;
-  create: (workout: IWorkout) => Promise<IWorkout>;
-  update: (workout: IWorkout) => Promise<IWorkout>;
-  delete: (workout: IWorkout) => Promise<void>;
+abstract class WorkoutsApiAbstract {
+  static postJson: (
+    url: string,
+    method: string,
+    data: any
+  ) => Promise<IWorkoutForApi>;
+  static list: () => Promise<IWorkoutForApi[]>;
+  static create: (workout: IWorkoutForApi) => Promise<IWorkoutForApi>;
+  static update: (workout: IWorkoutForApi) => Promise<IWorkoutForApi>;
+  static delete: (workoutId: number) => Promise<void>;
 }
 
-export class WorkoutsApi {
+export class WorkoutsApi extends WorkoutsApiAbstract {
   static postJson(url: string, method: string, data: any) {
     return fetch(url, {
       body: JSON.stringify(data),
@@ -27,8 +32,7 @@ export class WorkoutsApi {
 
   static async list() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_DB_HOST}`);
-    const data = await response.json();
-    return data;
+    return response.json();
   }
 
   static async delete(workoutId: number) {
@@ -37,8 +41,8 @@ export class WorkoutsApi {
     });
   }
 
-  static async update(workout: IWorkout) {
-    const newWorkout = await this.postJson(
+  static async update(workout: IWorkoutForApi) {
+    await this.postJson(
       `${process.env.NEXT_PUBLIC_DB_HOST}${workout.id}`,
       'PATCH',
       workout
@@ -46,7 +50,7 @@ export class WorkoutsApi {
     return workout;
   }
 
-  static async create(workout: IWorkout) {
+  static async create(workout: IWorkoutForApi) {
     const response = await this.postJson(
       `${process.env.NEXT_PUBLIC_DB_HOST}`,
       'POST',
