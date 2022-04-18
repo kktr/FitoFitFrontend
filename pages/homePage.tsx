@@ -11,7 +11,7 @@ export const HomePageContext = React.createContext<IHomePageContext>({
   getText: async (inputValue) => `Z serwera: ${inputValue}`,
 });
 
-export const HomePage: NextPage = () => {
+export default function HomePage() {
   const { getValue, getText } = useContext(HomePageContext);
   const [value, setValue] = useState<string | null>(null);
   useEffect(() => {
@@ -50,4 +50,4 @@ export const HomePage: NextPage = () => {
       </form>
     </div>
   );
-};
+}
