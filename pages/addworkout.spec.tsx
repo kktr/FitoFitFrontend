@@ -112,4 +112,82 @@ describe(AddWorkout.name, () => {
       expect(descriptionInputElement.value).toBe('test description');
     });
   });
+
+  describe('tests for form fields validation', () => {
+    it('should display required errors when values are empty', async () => {
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      expect(await context.findAllByRole('alert')).toHaveLength(4);
+    });
+
+    it('should display required error when title value is shorter than 5 letters', async () => {
+      const titleInputElement = context.getByPlaceholderText(/title/i);
+      await userEvent.type(titleInputElement, '1234');
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const titleErrorElement = await context.findByText(
+        /title must be longer/i
+      );
+      expect(titleErrorElement).not.toBeNull();
+    });
+    it('should display required error when title value is longer than 50 letters', async () => {
+      const titleInputElement = context.getByPlaceholderText(/title/i);
+      await userEvent.type(
+        titleInputElement,
+        'convallis convenire conveniunt conversa conversam i'
+      );
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const titleErrorElement = await context.findByText(
+        /title must be shorter/i
+      );
+      expect(titleErrorElement).not.toBeNull();
+    });
+    it('should display required error when duration value is smaller than 1', async () => {
+      const durationInputElement = context.getByPlaceholderText(/duration/i);
+      await userEvent.type(durationInputElement, '-1');
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const durationErrorElement = await context.findByText(
+        /duration must not be less/i
+      );
+      expect(durationErrorElement).not.toBeNull();
+    });
+    it('should display required error when duration value is bigger than 1', async () => {
+      const durationInputElement = context.getByPlaceholderText(/duration/i);
+      await userEvent.type(durationInputElement, '10081');
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const durationErrorElement = await context.findByText(
+        /duration must not be greater/i
+      );
+      expect(durationErrorElement).not.toBeNull();
+    });
+
+    it('should display required error when description value is shorter than 5 letters', async () => {
+      const descriptionInputElement = context.getByLabelText(/Describe/i);
+
+      await userEvent.type(descriptionInputElement, '1234');
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const descriptionErrorElement = await context.findByText(
+        /description must be longer/i
+      );
+      expect(descriptionErrorElement).not.toBeNull();
+    });
+    it('should display required error when description value is longer than 50 letters', async () => {
+      const descriptionInputElement = context.getByLabelText(/Describe/i);
+
+      await userEvent.type(
+        descriptionInputElement,
+        'convallis convenire conveniunt conversa conversam i'
+      );
+      fireEvent.submit(context.getByRole('button', { name: 'Add' }));
+
+      const descriptionErrorElement = await context.findByText(
+        /description must be shorter/i
+      );
+      expect(descriptionErrorElement).not.toBeNull();
+    });
+  });
 });
